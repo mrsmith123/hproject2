@@ -1,0 +1,27 @@
+// --------------------------------
+
+// (START) Global Editor code https://codyhouse.co/ds/globals/spacing
+
+// --------------------------------
+
+:root {
+  --space-unit: 1em;
+  --space-xxxxs: calc(0.237 * var(--space-unit));
+  --space-xxxs: calc(0.316 * var(--space-unit));
+  --space-xxs: calc(0.422 * var(--space-unit));
+  --space-xs: calc(0.563 * var(--space-unit));
+  --space-sm: calc(0.75 * var(--space-unit));
+  --space-md: calc(1 * var(--space-unit));
+  --space-lg: calc(1.333 * var(--space-unit));
+  --space-xl: calc(1.777 * var(--space-unit));
+  --space-xxl: calc(2.369 * var(--space-unit));
+  --space-xxxl: calc(3.157 * var(--space-unit));
+  --space-xxxxl: calc(4.21 * var(--space-unit));
+  --component-padding: var(--space-md);
+}
+
+// --------------------------------
+
+// (END) Global Editor Code
+
+// --------------------------------
