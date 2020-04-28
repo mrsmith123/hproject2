@@ -6,13 +6,13 @@
   <script>document.getElementsByTagName("html")[0].className += " js";</script>
   <script>
     if('CSS' in window && CSS.supports('color', 'var(--color-var)')) {
-      document.write('<link rel="stylesheet" href="../sass/style.css">');
+      document.write('<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">');
     } else {
-      document.write('<link rel="stylesheet" href="../sass/css/style-fallback.css">');
+      document.write('<link rel="stylesheet" href="{{ asset('assets/css/style-fallback.css') }}">');
     }
   </script>
   <noscript>
-    <link rel="stylesheet" href="../sass/style-fallback.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style-fallback.css') }}">
   </noscript>
   <title>Title</title>
 </head><link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@
           <circle cx="15" cy="15" r="15" fill="var(--color-primary)" />
         </svg>
       </a>
-  
+
       <!-- 👇 icon buttons --mobile -->
       <div class="mega-nav__icon-btns mega-nav__icon-btns--mobile">
         <a href="#0" class="mega-nav__icon-btn">
@@ -40,7 +40,7 @@
             </g>
           </svg>
         </a>
-  
+
         <button class="reset mega-nav__icon-btn mega-nav__icon-btn--search js-tab-focus" aria-label="Toggle search" aria-controls="mega-nav-search">
           <svg class="icon" viewBox="0 0 24 24">
             <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2">
@@ -50,7 +50,7 @@
             </g>
           </svg>
         </button>
-  
+
         <button class="reset mega-nav__icon-btn mega-nav__icon-btn--menu js-tab-focus" aria-label="Toggle menu" aria-controls="mega-nav-navigation">
           <svg class="icon" viewBox="0 0 24 24">
             <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2">
@@ -61,7 +61,7 @@
           </svg>
         </button>
       </div>
-  
+
       <div class="mega-nav__nav js-mega-nav__nav" id="mega-nav-navigation" role="navigation" aria-label="Main">
         <div class="mega-nav__nav-inner">
           <ul class="mega-nav__items">
@@ -78,7 +78,7 @@
                   </svg>
                 </i>
               </button>
-  
+
               <div class="mega-nav__sub-nav-wrapper">
                 <div class="mega-nav__sub-nav mega-nav__sub-nav--layout-2">
                   <ul class="mega-nav__sub-items">
@@ -113,10 +113,10 @@
                   <div class="mega-nav__card width-100% max-width-xs margin-x-auto">
                     <a href="#0" class="block radius-lg overflow-hidden">
                       <figure class="media-wrapper media-wrapper--4:3">
-                        <img class="block width-100%" src="../../assets/img/mega-site-nav-img-1.jpg" alt="Image description">
+                        <img class="block width-100%" src="{{ asset('assets/img/mega-site-nav-img-1.jpg') }}" alt="Image description">
                       </figure>
                     </a>
-  
+
                     <div class="margin-top-sm">
                       <h3 class="text-base"><a href="#0" class="mega-nav__card-title">Browse all →</a></h3>
                     </div>
@@ -141,7 +141,7 @@
               <a href="#0" class="mega-nav__control">Games</a>
             </li>
           </ul>
-  
+
           <ul class="mega-nav__items">
             <!-- 👇 icon buttons --desktop -->
             <li class="mega-nav__icon-btns mega-nav__icon-btns--desktop">
@@ -156,7 +156,7 @@
                       </g>
                     </svg>
                   </a>
-  
+
                   <ul class="dropdown__menu" aria-label="submenu">
                     <li><a href="#0" class="dropdown__item">Profile</a></li>
                     <li><a href="upload.html" class="dropdown__item">Upload</a></li>
@@ -167,7 +167,7 @@
                   </ul>
                 </div>
               </div>
-  
+
               <button class="reset mega-nav__icon-btn mega-nav__icon-btn--search js-tab-focus" aria-label="Toggle search" aria-controls="mega-nav-search">
                 <svg class="icon" viewBox="0 0 24 24">
                   <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2">
@@ -178,7 +178,7 @@
                 </svg>
               </button>
             </li>
-  
+
             <!-- 👇 button -->
             <li class="mega-nav__item">
               <a href="register.html" class="btn btn--primary mega-nav__btn">Register</a>
@@ -189,7 +189,7 @@
           </ul>
         </div>
       </div>
-  
+
       <!-- 👇 search -->
       <div class="mega-nav__search js-mega-nav__search" id="mega-nav-search">
         <div class="mega-nav__search-inner">
@@ -213,37 +213,37 @@
 <div class="container-justified-gal">
   <div class="flexbin flexbin-margin">
     <a href="#">
-      <img src="../../assets/img/team-img-1.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-1.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-2.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-2.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-3.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-3.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-4.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-4.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-5.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-5.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-6.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-6.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-7.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-7.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-8.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-8.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-9.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-9.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-10.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-10.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
-      <img src="../../assets/img/team-img-11.jpg" class="card-v2"/>
+      <img src="{{ asset('assets/img/team-img-11.jpg') }}" class="card-v2"/>
     </a>
   </div>
 </div>
@@ -286,6 +286,6 @@
       </a>
     </div>
   </div>
-  <script src="../js/scripts.js"></script>
+  <script src="{{ asset('assets/js/scripts.js') }}"></script>
 </footer>
 </html>
