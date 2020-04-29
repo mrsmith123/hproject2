@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/mangas', function () {
-    return view('pages.mangas');
-});
+Route::get('/', 'PagesController@index');
+Route::get('/mangas', 'PagesController@mangas');
+Route::get('/blogpage', 'PagesController@blogpage');
+Route::get('/about', 'PagesController@about');

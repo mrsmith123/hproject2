@@ -1,9 +1,51 @@
 @extends('layouts.app')
-
 @section('content')
+
+<section class="margin-top-md">
+<div class="drag-gallery js-drag-gallery container max-width-adaptive-lg">
+  <ul class="drag-gallery__list gap-md">
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+
+    <li class="drag-gallery__item card-v2">
+      <img src="assets/img/team-img-5.jpg" alt="Image">
+    </li>
+    
+  </ul>
+  <div aria-hidden="true" class="drag-gallery__gesture-hint"></div>
+</div>
+</section>
+
+<div class="text-divider container max-width-adaptive-lg"><span>Text divider</span></div>
+
 <div class="container-justified-gal">
   <div class="flexbin flexbin-margin">
-    <a href="#">
+    <a href="http://127.0.0.1:8000/blogpage">
       <img src="{{ asset('assets/img/team-img-1.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">
@@ -38,4 +80,5 @@
     </a>
   </div>
 </div>
+
 @endsection

@@ -579,6 +579,201 @@ Math.easeOutElastic = function (t, b, c, d) {
 }());
 
 
+// File#: _1_social-sharing
+// Usage: codyhouse.co/license
+(function() {
+  function initSocialShare(button) {
+    button.addEventListener('click', function(event){
+      event.preventDefault();
+      var social = button.getAttribute('data-social');
+      var url = getSocialUrl(button, social);
+      (social == 'mail')
+        ? window.location.href = url
+        : window.open(url, social+'-share-dialog', 'width=626,height=436');
+    });
+  };
+
+  function getSocialUrl(button, social) {
+    var params = getSocialParams(social);
+    var newUrl = '';
+    for(var i = 0; i < params.length; i++) {
+      var paramValue = button.getAttribute('data-'+params[i]);
+      if(params[i] == 'hashtags') paramValue = encodeURI(paramValue.replace(/\#| /g, ''));
+      if(paramValue) {
+        (social == 'facebook') 
+          ? newUrl = newUrl + 'u='+encodeURIComponent(paramValue)+'&'
+          : newUrl = newUrl + params[i]+'='+encodeURIComponent(paramValue)+'&';
+      }
+    }
+    if(social == 'linkedin') newUrl = 'mini=true&'+newUrl;
+    return button.getAttribute('href')+'?'+newUrl;
+  };
+
+  function getSocialParams(social) {
+    var params = [];
+    switch (social) {
+      case 'twitter':
+        params = ['text', 'hashtags'];
+        break;
+      case 'facebook':
+      case 'linkedin':
+        params = ['url'];
+        break;
+      case 'pinterest':
+        params = ['url', 'media', 'description'];
+        break;
+      case 'mail':
+        params = ['subject', 'body'];
+        break;
+    }
+    return params;
+  };
+
+  var socialShare = document.getElementsByClassName('js-social-share');
+  if(socialShare.length > 0) {
+    for( var i = 0; i < socialShare.length; i++) {
+      (function(i){initSocialShare(socialShare[i])})(i);
+    }
+  }
+}());
+// File#: _1_swipe-content
+(function() {
+  var SwipeContent = function(element) {
+    this.element = element;
+    this.delta = [false, false];
+    this.dragging = false;
+    this.intervalId = false;
+    initSwipeContent(this);
+  };
+
+  function initSwipeContent(content) {
+    content.element.addEventListener('mousedown', handleEvent.bind(content));
+    content.element.addEventListener('touchstart', handleEvent.bind(content));
+  };
+
+  function initDragging(content) {
+    //add event listeners
+    content.element.addEventListener('mousemove', handleEvent.bind(content));
+    content.element.addEventListener('touchmove', handleEvent.bind(content));
+    content.element.addEventListener('mouseup', handleEvent.bind(content));
+    content.element.addEventListener('mouseleave', handleEvent.bind(content));
+    content.element.addEventListener('touchend', handleEvent.bind(content));
+  };
+
+  function cancelDragging(content) {
+    //remove event listeners
+    if(content.intervalId) {
+      (!window.requestAnimationFrame) ? clearInterval(content.intervalId) : window.cancelAnimationFrame(content.intervalId);
+      content.intervalId = false;
+    }
+    content.element.removeEventListener('mousemove', handleEvent.bind(content));
+    content.element.removeEventListener('touchmove', handleEvent.bind(content));
+    content.element.removeEventListener('mouseup', handleEvent.bind(content));
+    content.element.removeEventListener('mouseleave', handleEvent.bind(content));
+    content.element.removeEventListener('touchend', handleEvent.bind(content));
+  };
+
+  function handleEvent(event) {
+    switch(event.type) {
+      case 'mousedown':
+      case 'touchstart':
+        startDrag(this, event);
+        break;
+      case 'mousemove':
+      case 'touchmove':
+        drag(this, event);
+        break;
+      case 'mouseup':
+      case 'mouseleave':
+      case 'touchend':
+        endDrag(this, event);
+        break;
+    }
+  };
+
+  function startDrag(content, event) {
+    content.dragging = true;
+    // listen to drag movements
+    initDragging(content);
+    content.delta = [parseInt(unify(event).clientX), parseInt(unify(event).clientY)];
+    // emit drag start event
+    emitSwipeEvents(content, 'dragStart', content.delta, event.target);
+  };
+
+  function endDrag(content, event) {
+    cancelDragging(content);
+    // credits: https://css-tricks.com/simple-swipe-with-vanilla-javascript/
+    var dx = parseInt(unify(event).clientX), 
+      dy = parseInt(unify(event).clientY);
+    
+    // check if there was a left/right swipe
+    if(content.delta && (content.delta[0] || content.delta[0] === 0)) {
+      var s = getSign(dx - content.delta[0]);
+      
+      if(Math.abs(dx - content.delta[0]) > 30) {
+        (s < 0) ? emitSwipeEvents(content, 'swipeLeft', [dx, dy]) : emitSwipeEvents(content, 'swipeRight', [dx, dy]);	
+      }
+      
+      content.delta[0] = false;
+    }
+    // check if there was a top/bottom swipe
+    if(content.delta && (content.delta[1] || content.delta[1] === 0)) {
+    	var y = getSign(dy - content.delta[1]);
+
+    	if(Math.abs(dy - content.delta[1]) > 30) {
+      	(y < 0) ? emitSwipeEvents(content, 'swipeUp', [dx, dy]) : emitSwipeEvents(content, 'swipeDown', [dx, dy]);
+      }
+
+      content.delta[1] = false;
+    }
+    // emit drag end event
+    emitSwipeEvents(content, 'dragEnd', [dx, dy]);
+    content.dragging = false;
+  };
+
+  function drag(content, event) {
+    if(!content.dragging) return;
+    // emit dragging event with coordinates
+    (!window.requestAnimationFrame) 
+      ? content.intervalId = setTimeout(function(){emitDrag.bind(content, event);}, 250) 
+      : content.intervalId = window.requestAnimationFrame(emitDrag.bind(content, event));
+  };
+
+  function emitDrag(event) {
+    emitSwipeEvents(this, 'dragging', [parseInt(unify(event).clientX), parseInt(unify(event).clientY)]);
+  };
+
+  function unify(event) { 
+    // unify mouse and touch events
+    return event.changedTouches ? event.changedTouches[0] : event; 
+  };
+
+  function emitSwipeEvents(content, eventName, detail, el) {
+    var trigger = false;
+    if(el) trigger = el;
+    // emit event with coordinates
+    var event = new CustomEvent(eventName, {detail: {x: detail[0], y: detail[1], origin: trigger}});
+    content.element.dispatchEvent(event);
+  };
+
+  function getSign(x) {
+    if(!Math.sign) {
+      return ((x > 0) - (x < 0)) || +x;
+    } else {
+      return Math.sign(x);
+    }
+  };
+
+  window.SwipeContent = SwipeContent;
+  
+  //initialize the SwipeContent objects
+  var swipe = document.getElementsByClassName('js-swipe-content');
+  if( swipe.length > 0 ) {
+    for( var i = 0; i < swipe.length; i++) {
+      (function(i){new SwipeContent(swipe[i]);})(i);
+    }
+  }
+}());
 // File#: _1_tabs
 // Usage: codyhouse.co/license
 (function() {
@@ -665,6 +860,199 @@ Math.easeOutElastic = function (t, b, c, d) {
 			(function(i){new Tab(tabs[i]);})(i);
 		}
 	}
+}());
+// File#: _2_draggable-img-gallery
+// Usage: codyhouse.co/license
+(function() {
+  var DragGallery = function(element) {
+    this.element = element;
+    this.list = this.element.getElementsByTagName('ul')[0];
+    this.imgs = this.list.children;
+    this.gestureHint = this.element.getElementsByClassName('drag-gallery__gesture-hint');// drag gesture hint
+    this.galleryWidth = getGalleryWidth(this); 
+    this.translate = 0; // store container translate value
+    this.dragStart = false; // start dragging position
+    // drag momentum option
+    this.dragMStart = false;
+    this.dragTimeMStart = false;
+    this.dragTimeMEnd = false;
+    this.dragMSpeed = false;
+    this.dragAnimId = false;
+    initDragGalleryEvents(this); 
+  };
+
+  function initDragGalleryEvents(gallery) {
+    initDragging(gallery); // init dragging
+
+    gallery.element.addEventListener('update-gallery-width', function(event){ // window resize
+      gallery.galleryWidth = getGalleryWidth(gallery); 
+      // reset translate value if not acceptable
+      checkTranslateValue(gallery);
+      setTranslate(gallery);
+    });
+     
+    if(intersectionObsSupported) initOpacityAnim(gallery); // init image animation
+
+    if(!reducedMotion && gallery.gestureHint.length > 0) initHintGesture(gallery); // init hint gesture element animation
+
+    initKeyBoardNav(gallery);
+  };
+
+  function getGalleryWidth(gallery) {
+    return gallery.list.scrollWidth - gallery.list.offsetWidth;
+  };
+
+  function initDragging(gallery) { // gallery drag
+    new SwipeContent(gallery.element);
+    gallery.element.addEventListener('dragStart', function(event){
+      window.cancelAnimationFrame(gallery.dragAnimId);
+      Util.addClass(gallery.element, 'drag-gallery--is-dragging'); 
+      gallery.dragStart = event.detail.x;
+      gallery.dragMStart = event.detail.x;
+      gallery.dragTimeMStart = new Date().getTime();
+      gallery.dragTimeMEnd = false;
+      gallery.dragMSpeed = false;
+      initDragEnd(gallery);
+    });
+
+    gallery.element.addEventListener('dragging', function(event){
+      if(!gallery.dragStart) return;
+      if(Math.abs(event.detail.x - gallery.dragStart) < 5) return;
+      gallery.translate = Math.round(event.detail.x - gallery.dragStart + gallery.translate);
+      gallery.dragStart = event.detail.x;
+      checkTranslateValue(gallery);
+      setTranslate(gallery);
+    });
+  };
+
+  function initDragEnd(gallery) {
+    gallery.element.addEventListener('dragEnd', function cb(event){
+      gallery.element.removeEventListener('dragEnd', cb);
+      Util.removeClass(gallery.element, 'drag-gallery--is-dragging');
+      initMomentumDrag(gallery); // drag momentum
+      gallery.dragStart = false;
+    });
+  };
+
+  function initKeyBoardNav(gallery) {
+    gallery.element.setAttribute('tabindex', 0);
+    // navigate gallery using right/left arrows
+    gallery.element.addEventListener('keyup', function(event){
+      if( event.keyCode && event.keyCode == 39 || event.key && event.key.toLowerCase() == 'arrowright' ) {
+        keyboardNav(gallery, 'right');
+      } else if(event.keyCode && event.keyCode == 37 || event.key && event.key.toLowerCase() == 'arrowleft') {
+        keyboardNav(gallery, 'left');
+      }
+    });
+  };
+
+  function keyboardNav(gallery, direction) {
+    var delta = parseFloat(window.getComputedStyle(gallery.imgs[0]).marginRight) + gallery.imgs[0].offsetWidth;
+    gallery.translate = (direction == 'right') ? gallery.translate - delta : gallery.translate + delta;
+    checkTranslateValue(gallery);
+    setTranslate(gallery);
+  };
+
+  function checkTranslateValue(gallery) { // make sure translate is in the right interval
+    if(gallery.translate > 0) {
+      gallery.translate = 0;
+      gallery.dragMSpeed = 0;
+    }
+    if(Math.abs(gallery.translate) > gallery.galleryWidth) {
+      gallery.translate = gallery.galleryWidth*-1;
+      gallery.dragMSpeed = 0;
+    }
+  };
+
+  function setTranslate(gallery) {
+    gallery.list.style.transform = 'translateX('+gallery.translate+'px)';
+    gallery.list.style.msTransform = 'translateX('+gallery.translate+'px)';
+  };
+
+  function initOpacityAnim(gallery) { // animate img opacities on drag
+    for(var i = 0; i < gallery.imgs.length; i++) {
+      var observer = new IntersectionObserver(opacityCallback.bind(gallery.imgs[i]), { threshold: [0, 0.1] });
+      observer.observe(gallery.imgs[i]);
+    }
+  };
+
+  function opacityCallback(entries, observer) { // reveal images when they enter the viewport
+    var threshold = entries[0].intersectionRatio.toFixed(1);
+    if(threshold > 0) {
+      Util.addClass(this, 'drag-gallery__item--visible');
+      observer.unobserve(this);
+    }
+  };
+
+  function initMomentumDrag(gallery) {
+    // momentum effect when drag is over
+    if(reducedMotion) return;
+    var timeNow = new Date().getTime();
+    gallery.dragMSpeed = 0.95*(gallery.dragStart - gallery.dragMStart)/(timeNow - gallery.dragTimeMStart);
+
+    var currentTime = false;
+
+    function animMomentumDrag(timestamp) {
+      if (!currentTime) currentTime = timestamp;         
+      var progress = timestamp - currentTime;
+      currentTime = timestamp;
+      if(Math.abs(gallery.dragMSpeed) < 0.01) {
+        gallery.dragAnimId = false;
+        return;
+      } else {
+        gallery.translate = Math.round(gallery.translate + (gallery.dragMSpeed*progress));
+        checkTranslateValue(gallery);
+        setTranslate(gallery);
+        gallery.dragMSpeed = gallery.dragMSpeed*0.95;
+        gallery.dragAnimId = window.requestAnimationFrame(animMomentumDrag);
+      }
+    };
+
+    gallery.dragAnimId = window.requestAnimationFrame(animMomentumDrag);
+  };
+
+  function initHintGesture(gallery) { // show user a hint about gallery dragging
+    var observer = new IntersectionObserver(hintGestureCallback.bind(gallery.gestureHint[0]), { threshold: [0, 1] });
+    observer.observe(gallery.gestureHint[0]);
+  };
+
+  function hintGestureCallback(entries, observer) {
+    var threshold = entries[0].intersectionRatio.toFixed(1);
+    if(threshold > 0) {
+      Util.addClass(this, 'drag-gallery__gesture-hint--animate');
+      observer.unobserve(this);
+    }
+  };
+
+  //initialize the DragGallery objects
+  var dragGallery = document.getElementsByClassName('js-drag-gallery'),
+    intersectionObsSupported = ('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype),
+    reducedMotion = Util.osHasReducedMotion();
+
+  if( dragGallery.length > 0 ) {
+    var dragGalleryArray = [];
+    for( var i = 0; i < dragGallery.length; i++) {
+      (function(i){ 
+        if(!intersectionObsSupported || reducedMotion) Util.addClass(dragGallery[i], 'drag-gallery--anim-off');
+        dragGalleryArray.push(new DragGallery(dragGallery[i]));
+      })(i);
+    }
+
+    // resize event
+    var resizingId = false,
+      customEvent = new CustomEvent('update-gallery-width');
+    
+    window.addEventListener('resize', function() {
+      clearTimeout(resizingId);
+      resizingId = setTimeout(doneResizing, 500);
+    });
+
+    function doneResizing() {
+      for( var i = 0; i < dragGalleryArray.length; i++) {
+        (function(i){dragGalleryArray[i].element.dispatchEvent(customEvent)})(i);
+      };
+    };
+  }
 }());
 // File#: _2_dropdown
 // Usage: codyhouse.co/license
@@ -1278,3 +1666,139 @@ Math.easeOutElastic = function (t, b, c, d) {
     };
   }
 }());
+(function(){
+    //Login/Signup modal window - by CodyHouse.co
+	function ModalSignin( element ) {
+		this.element = element;
+		this.blocks = this.element.getElementsByClassName('js-signin-modal-block');
+		this.switchers = this.element.getElementsByClassName('js-signin-modal-switcher')[0].getElementsByTagName('a'); 
+		this.triggers = document.getElementsByClassName('js-signin-modal-trigger');
+		this.hidePassword = this.element.getElementsByClassName('js-hide-password');
+		this.init();
+	};
+
+	ModalSignin.prototype.init = function() {
+		var self = this;
+		//open modal/switch form
+		for(var i =0; i < this.triggers.length; i++) {
+			(function(i){
+				self.triggers[i].addEventListener('click', function(event){
+					if( event.target.hasAttribute('data-signin') ) {
+						event.preventDefault();
+						self.showSigninForm(event.target.getAttribute('data-signin'));
+					}
+				});
+			})(i);
+		}
+
+		//close modal
+		this.element.addEventListener('click', function(event){
+			if( hasClass(event.target, 'js-signin-modal') || hasClass(event.target, 'js-close') ) {
+				event.preventDefault();
+				removeClass(self.element, 'cd-signin-modal--is-visible');
+			}
+		});
+		//close modal when clicking the esc keyboard button
+		document.addEventListener('keydown', function(event){
+			(event.which=='27') && removeClass(self.element, 'cd-signin-modal--is-visible');
+		});
+
+		//hide/show password
+		for(var i =0; i < this.hidePassword.length; i++) {
+			(function(i){
+				self.hidePassword[i].addEventListener('click', function(event){
+					self.togglePassword(self.hidePassword[i]);
+				});
+			})(i);
+		} 
+
+		//IMPORTANT - REMOVE THIS - it's just to show/hide error messages in the demo
+		this.blocks[0].getElementsByTagName('form')[0].addEventListener('submit', function(event){
+			event.preventDefault();
+			self.toggleError(document.getElementById('signin-email'), true);
+		});
+		this.blocks[1].getElementsByTagName('form')[0].addEventListener('submit', function(event){
+			event.preventDefault();
+			self.toggleError(document.getElementById('signup-username'), true);
+		});
+	};
+
+	ModalSignin.prototype.togglePassword = function(target) {
+		var password = target.previousElementSibling;
+		( 'password' == password.getAttribute('type') ) ? password.setAttribute('type', 'text') : password.setAttribute('type', 'password');
+		target.textContent = ( 'Hide' == target.textContent ) ? 'Show' : 'Hide';
+		putCursorAtEnd(password);
+	}
+
+	ModalSignin.prototype.showSigninForm = function(type) {
+		// show modal if not visible
+		!hasClass(this.element, 'cd-signin-modal--is-visible') && addClass(this.element, 'cd-signin-modal--is-visible');
+		// show selected form
+		for( var i=0; i < this.blocks.length; i++ ) {
+			this.blocks[i].getAttribute('data-type') == type ? addClass(this.blocks[i], 'cd-signin-modal__block--is-selected') : removeClass(this.blocks[i], 'cd-signin-modal__block--is-selected');
+		}
+		//update switcher appearance
+		var switcherType = (type == 'signup') ? 'signup' : 'login';
+		for( var i=0; i < this.switchers.length; i++ ) {
+			this.switchers[i].getAttribute('data-type') == switcherType ? addClass(this.switchers[i], 'cd-selected') : removeClass(this.switchers[i], 'cd-selected');
+		} 
+	};
+
+	ModalSignin.prototype.toggleError = function(input, bool) {
+		// used to show error messages in the form
+		toggleClass(input, 'cd-signin-modal__input--has-error', bool);
+		toggleClass(input.nextElementSibling, 'cd-signin-modal__error--is-visible', bool);
+	}
+
+	var signinModal = document.getElementsByClassName("js-signin-modal")[0];
+	if( signinModal ) {
+		new ModalSignin(signinModal);
+	}
+
+	// toggle main navigation on mobile
+	var mainNav = document.getElementsByClassName('js-main-nav')[0];
+	if(mainNav) {
+		mainNav.addEventListener('click', function(event){
+			if( hasClass(event.target, 'js-main-nav') ){
+				var navList = mainNav.getElementsByTagName('ul')[0];
+				toggleClass(navList, 'cd-main-nav__list--is-visible', !hasClass(navList, 'cd-main-nav__list--is-visible'));
+			} 
+		});
+	}
+	
+	//class manipulations - needed if classList is not supported
+	function hasClass(el, className) {
+	  	if (el.classList) return el.classList.contains(className);
+	  	else return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+	}
+	function addClass(el, className) {
+		var classList = className.split(' ');
+	 	if (el.classList) el.classList.add(classList[0]);
+	 	else if (!hasClass(el, classList[0])) el.className += " " + classList[0];
+	 	if (classList.length > 1) addClass(el, classList.slice(1).join(' '));
+	}
+	function removeClass(el, className) {
+		var classList = className.split(' ');
+	  	if (el.classList) el.classList.remove(classList[0]);	
+	  	else if(hasClass(el, classList[0])) {
+	  		var reg = new RegExp('(\\s|^)' + classList[0] + '(\\s|$)');
+	  		el.className=el.className.replace(reg, ' ');
+	  	}
+	  	if (classList.length > 1) removeClass(el, classList.slice(1).join(' '));
+	}
+	function toggleClass(el, className, bool) {
+		if(bool) addClass(el, className);
+		else removeClass(el, className);
+	}
+
+	//credits http://css-tricks.com/snippets/jquery/move-cursor-to-end-of-textarea-or-input/
+	function putCursorAtEnd(el) {
+    	if (el.setSelectionRange) {
+      		var len = el.value.length * 2;
+      		el.focus();
+      		el.setSelectionRange(len, len);
+    	} else {
+      		el.value = el.value;
+    	}
+	};
+})();
