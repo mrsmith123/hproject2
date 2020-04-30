@@ -72,3 +72,13 @@ $flexbin-space-phone: $flexbin-space !default;
     margin-left: auto;
     margin-right: auto;
 }
+
+.flexbin.flexbin-margin{
+    margin-left: -7px;
+    margin-right: -7px;
+  }
+  @media (max-width:1000px){
+    .flexbin.flexbin-margin{
+      margin:10px;
+    }
+  }
