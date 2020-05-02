@@ -1,0 +1,56 @@
+/* --------------------------------
+
+File#: _1_newsletter-card
+Title: Newsletter Card
+Descr: A card containing a newsletter form
+Usage: codyhouse.co/license
+
+-------------------------------- */
+
+.newsletter-card {
+    background-color: var(--color-bg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--component-padding);
+    text-align: center;
+}
+
+.newsletter-card__inner {
+    // set max-width for the content
+    max-width: var(--max-width-xxs);
+    margin: auto;
+}
+
+.newsletter-card__icon {
+    font-size: 2.4em; // icon size
+    color: inherit; // icon color
+}
+
+.newsletter-card__feedback {
+    font-size: var(--text-sm);
+    padding: var(--space-sm);
+    border-radius: var(--radius-md);
+    // hide
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+}
+
+.newsletter-card__feedback--is-visible {
+    // show
+    position: relative;
+    clip: auto;
+    clip-path: none;
+}
+
+.newsletter-card__feedback--success {
+    background-color: alpha(var(--color-success), 0.2);
+}
+
+.newsletter-card__feedback--error {
+    background-color: alpha(var(--color-error), 0.2);
+}
+
+.newsletter-card__feedback--warning {
+    background-color: alpha(var(--color-warning), 0.2);
+}
