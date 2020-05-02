@@ -43,7 +43,11 @@ gulp.task("sass", function() {
 
 gulp.task("scripts", function() {
     return gulp
-        .src([utilJsPath + "/util.js", componentsJsPath])
+        .src([
+            "node_modules/jquery/dist/jquery.min.js",
+            utilJsPath + "/util.js",
+            componentsJsPath
+        ])
         .pipe(concat("scripts.js"))
         .pipe(gulp.dest(scriptsJsPath))
         .pipe(
