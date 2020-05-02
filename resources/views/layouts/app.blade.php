@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <script>document.getElementsByTagName("html")[0].className += " js";</script>
   <script>
     if('CSS' in window && CSS.supports('color', 'var(--color-var)')) {
@@ -289,16 +293,20 @@
           data-type="signup"
         >
           <!-- sign up form -->
-          <form class="cd-signin-modal__form">
+          <form action="{{ route('register') }}" method="POST" class="cd-signin-modal__form" id="sign-up-form">@csrf
+            <div class="newsletter-card__feedback newsletter-card__feedback--success margin-top-sm" role="alert"> <!-- /.newsletter-card__feedback--is-visible -->
+              Success!
+            </div><!-- /.newsletter-card__feedback -->
             <p class="cd-signin-modal__fieldset">
               <label
                 class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"
-                for="signup-username"
+                for="username"
                 >Username</label
               >
               <input
                 class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-username"
+                id="username"
+                name="username"
                 type="text"
                 placeholder="Username"
               />
@@ -308,12 +316,13 @@
             <p class="cd-signin-modal__fieldset">
               <label
                 class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="signup-email"
+                for="email"
                 >E-mail</label
               >
               <input
                 class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-email"
+                id="email"
+                name="email"
                 type="email"
                 placeholder="E-mail"
               />
@@ -323,15 +332,17 @@
             <p class="cd-signin-modal__fieldset">
               <label
                 class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
-                for="signup-password"
+                for="password"
                 >Password</label
               >
               <input
                 class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signup-password"
+                id="password"
+                name="password"
                 type="text"
                 placeholder="Password"
               />
+              <span class="cd-signin-modal__error">Error message here!</span>
               <a
                 href="#0"
                 class="cd-signin-modal__hide-password js-hide-password"
@@ -343,10 +354,11 @@
             <p class="cd-signin-modal__fieldset">
               <input
                 type="checkbox"
-                id="accept-terms"
+                id="terms"
+                name="terms"
                 class="cd-signin-modal__input"
               />
-              <label for="accept-terms"
+              <label for="terms"
                 >I agree to the <a href="#0">Terms</a></label
               >
             </p>
@@ -442,6 +454,93 @@
     </div>
   </div>
   <script src="{{ asset('assets/js/scripts.js') }}"></script>
+  <script>
+    (function(){
+      $('#sign-up-form').on('submit', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var url = $this.attr('action');
+        var method = $this.attr('method');
+
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var terms = $('#terms').val();
+
+        var $feedback = $this.find('.newsletter-card__feedback');
+
+        $.ajax({
+          url: url,
+          type: method,
+          dataType: 'JSON',
+          data: $this.serialize(),
+          success:function(response){
+            // console.log(response);
+
+            if (response.status === 'success') {
+              $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
+
+              // reset
+              $this[0].reset();
+              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+            $('input').removeClass('cd-signin-modal__input--has-error');
+            }
+          },
+          error: function(response){
+            var jsonResponse = response.responseJSON;
+            var errors = jsonResponse.errors;
+            var errorsHTML = '';
+
+            // console.log(errors);
+
+            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+            $('input').removeClass('cd-signin-modal__input--has-error');
+
+            $.each( errors, function( key, value ) {
+              errorsHTML += value[0] + '</br>';
+
+              if (key === 'terms') {
+                $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html('<strong>Error</strong> </br>'+ value[0]);
+              }else{
+                $('#'+key).addClass('cd-signin-modal__input--has-error');
+
+                $('#'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
+              }
+
+            });
+
+          }
+         });
+      });
+
+      $(document).on('keydown', function(event){
+        // check if pressed on ESC key
+        if (event.which === 27) {
+          resetForms();
+        }
+      });
+
+      // reseta form when modal is clicked
+      $('.js-signin-modal').on('click', function(event){
+        // if not the modal, then just do nothing
+        if (event.target !== this){
+          return;
+        }
+
+        // else reset forms
+        resetForms();
+      });
+
+      // resets form inputs, feedbacks, input errors
+      function resetForms(){
+        $('form').trigger('reset');
+        $('.newsletter-card__feedback').removeClass('newsletter-card__feedback--is-visible');
+        $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+        $('input').removeClass('cd-signin-modal__input--has-error');
+      }
+
+    })();
+  </script>
 </footer>
 
 </html>
