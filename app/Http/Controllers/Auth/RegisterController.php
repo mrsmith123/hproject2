@@ -84,4 +84,9 @@ class RegisterController extends Controller
             'data'    => null
         ]);
     }
+
+    public function showRegistrationForm()
+    {
+        return redirect('/');
+    }
 }
