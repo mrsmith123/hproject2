@@ -48,7 +48,7 @@
     <a href="http://127.0.0.1:8000/blogpage">
       <img src="{{ asset('assets/img/team-img-1.jpg') }}" class="card-v2"/>
     </a>
-    <a href="#">
+    <a href="http://127.0.0.1:8000/venue">
       <img src="{{ asset('assets/img/team-img-2.jpg') }}" class="card-v2"/>
     </a>
     <a href="#">

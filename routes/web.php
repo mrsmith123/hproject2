@@ -18,6 +18,7 @@ Auth::routes();
 Route::get('/', 'PagesController@index');
 Route::get('/mangas', 'PagesController@mangas');
 Route::get('/blogpage', 'PagesController@blogpage');
+Route::get('/venue', 'PagesController@venue');
 Route::get('/about', 'PagesController@about');
 
 Route::get('/home', 'PagesController@index')->name('home');
