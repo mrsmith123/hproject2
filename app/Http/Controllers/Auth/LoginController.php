@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+use App\User;
+use Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -37,4 +41,42 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function showLoginForm()
+    {
+        return redirect('/');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Login successful. You will be redirected in a moment.',
+                'data'    => [
+                    'redirect_url' => $this->redirectTo
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'Failed to log in. Either email or password is incorrect.',
+            'data'    => null
+        ]);
+
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => ['required', 'string'],
+            'password'        => ['required', 'string'],
+        ]);
+    }
+
 }
