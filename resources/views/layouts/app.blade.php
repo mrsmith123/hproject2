@@ -173,6 +173,7 @@
               </button>
             </li>
 
+            @guest
             <!-- 👇 button -->
             <li class="mega-nav__item js-signin-modal-trigger">
               <a href="#0" class="btn btn--primary mega-nav__btn" data-signin="signup">Register</a>
@@ -180,6 +181,12 @@
             <li class="mega-nav__item js-signin-modal-trigger">
               <a href="#0" class="btn btn--subtle mega-nav__btn" data-signin="login">Login</a>
             </li>
+            @endguest
+            @auth
+            <li class="mega-nav__item">
+              <a href="{{ url('/logout') }}" class="btn btn--subtle mega-nav__btn">Log out</a>
+            </li>
+            @endauth
           </ul>
         </div>
       </div>
@@ -206,6 +213,7 @@
 <body>
   @yield('content')
 
+  @guest
   <!-- SIGN IN MODAL START -->
     <div class="cd-signin-modal js-signin-modal">
       <!-- this is the entire modal form, including the background -->
@@ -227,7 +235,10 @@
           data-type="login"
         >
           <!-- log in form -->
-          <form class="cd-signin-modal__form">
+          <form action="{{ route('login') }}" method="POST" class="cd-signin-modal__form" id="login-form">@csrf
+            <div class="newsletter-card__feedback newsletter-card__feedback--success margin-top-sm" role="alert"> <!-- /.newsletter-card__feedback--is-visible -->
+              Success!
+            </div><!-- /.newsletter-card__feedback -->
             <p class="cd-signin-modal__fieldset">
               <label
                 class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
@@ -237,6 +248,7 @@
               <input
                 class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
                 id="signin-email"
+                name="email"
                 type="email"
                 placeholder="E-mail"
               />
@@ -252,9 +264,11 @@
               <input
                 class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
                 id="signin-password"
+                name="password"
                 type="text"
                 placeholder="Password"
               />
+              <span class="cd-signin-modal__error">Error message here!</span>
               <a
                 href="#0"
                 class="cd-signin-modal__hide-password js-hide-password"
@@ -267,6 +281,7 @@
               <input
                 type="checkbox"
                 id="remember-me"
+                name="remember"
                 checked
                 class="cd-signin-modal__input"
               />
@@ -420,6 +435,7 @@
     </div>
     <!-- cd-signin-modal -->
   <!-- SIGN IN MODAL START -->
+  @endguest
 
 </body>
 
@@ -454,8 +470,72 @@
     </div>
   </div>
   <script src="{{ asset('assets/js/scripts.js') }}"></script>
+  @guest
   <script>
     (function(){
+      // login fomrm
+      $('#login-form').on('submit', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var url = $this.attr('action');
+        var method = $this.attr('method');
+
+        var email = $('#signin-email').val();
+        var password = $('#signin-password').val();
+        var remember = $('#remember-me').val();
+
+        var $feedback = $this.find('.newsletter-card__feedback');
+
+        $.ajax({
+          url: url,
+          type: method,
+          dataType: 'JSON',
+          data: $this.serialize(),
+          success:function(response){
+            // console.log(response);
+
+            if (response.status === 'success') {
+              $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
+
+              // reset
+              $this[0].reset();
+              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+              $('input').removeClass('cd-signin-modal__input--has-error');
+
+              // redirect
+              window.location.replace(response.data.redirect_url);
+            }else{
+              $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html(response.message);
+
+              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+              $('input').removeClass('cd-signin-modal__input--has-error');
+            }
+          },
+          error: function(response){
+            console.log(response.responseText);
+            var jsonResponse = response.responseJSON;
+            var errors = jsonResponse.errors;
+            var errorsHTML = '';
+
+            console.log('ERROR', response.responseText);
+
+            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+            $('input').removeClass('cd-signin-modal__input--has-error');
+
+            $.each( errors, function( key, value ) {
+              errorsHTML += value[0] + '</br>';
+
+              $('#signin-'+key).addClass('cd-signin-modal__input--has-error');
+
+              $('#signin-'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
+
+            });
+
+          }
+         });
+      });
+
+      // registration form
       $('#sign-up-form').on('submit', function(e){
         e.preventDefault();
         var $this = $(this);
@@ -541,6 +621,7 @@
 
     })();
   </script>
+  @endguest
 </footer>
 
 </html>
