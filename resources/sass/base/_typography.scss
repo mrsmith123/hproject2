@@ -55,7 +55,7 @@ small, .text-sm {
 // inline text
 a, .link {
   color: var(--color-primary, hsl(220, 90%, 56%));
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 strong {

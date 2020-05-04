@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('content')
-<article class="padding-bottom-lg">
-  <div class="t-article-v2__hero">
-    <div class="t-article-v2__cover" aria-hidden="true" style="background-image: url('https://media.urbanistnetwork.com/saigoneer/xplr-images/premium-content/after5/dj1h.jpg');"></div>
-
-    <div class="t-article-v2__intro container max-width-adaptive-sm margin-bottom-lg">
-      <div class="text-component text-center">
-        <h1 class="text-xxxl">It was going to be a lonely trip back</h1>
-        <p class="text-sm">By <a href="#0">Olivia Gribben</a></p>
-      </div>
-
-  
-</article>
+<div class="profile-card container max-width-adaptive-lg">
+<figure class="snip1336">
+  <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample87.jpg" alt="sample87" />
+  <figcaption>
+    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/profile-sample4.jpg" alt="profile-sample4" class="profile" />
+    <h2>Hans Down<span>Engineer</span></h2>
+    <p>I'm looking for something that can deliver a 50-pound payload of snow on a small feminine target. Can you suggest something? Hello...? </p>
+    <a href="#" class="follow">Follow</a>
+    <a href="#" class="info">More Info</a>
+  </figcaption>
+</figure>
+</div>
 @endsection
