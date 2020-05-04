@@ -20,7 +20,6 @@ Route::get('/mangas', 'PagesController@mangas');
 Route::get('/blogpage', 'PagesController@blogpage');
 Route::get('/venue', 'PagesController@venue');
 Route::get('/about', 'PagesController@about');
-
+Route::get('/profile', 'PagesController@profile');
 Route::get('/home', 'HomeController');
-
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

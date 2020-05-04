@@ -25,4 +25,8 @@ class PagesController extends Controller
     public function venue(){
         return view('pages.venue');
     }
+
+    public function profile(){
+        return view('pages.profile');
+    }
 }
