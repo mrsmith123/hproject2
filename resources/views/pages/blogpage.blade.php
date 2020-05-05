@@ -6,7 +6,7 @@
 
     <div class="t-article-v2__intro container max-width-adaptive-sm margin-bottom-lg">
       <div class="text-component text-center">
-        <h1 class="text-xxxl">It was going to be a lonely trip back</h1>
+        <h1 class="text-xxxl">It was going to be a lonely trip back to the real world</h1>
         <p class="text-sm">By <a href="#0">Olivia Gribben</a></p>
       </div>
 

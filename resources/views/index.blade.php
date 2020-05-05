@@ -4,7 +4,7 @@
 <div class="pre-header padding-y-xs js-pre-header">
   <div class="container max-width-lg position-relative">
     <div class="text-component text-sm padding-right-lg">
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo vero necessitatibus dolores quidem fugiat! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo vero necessitatibus dolores quidem fugiat! <a href="#0" class="color-inherit text-underline">Learn more</a></p>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo vero necessitatibus dolores quidem fugiat! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo vero necessitatibus dolores <a href="#0" class="btn btn--sm btn--primary" data-signin="signup">Get Started!</a></p>
     </div>
 
     <button class="reset pre-header__close-btn js-pre-header__close-btn">
