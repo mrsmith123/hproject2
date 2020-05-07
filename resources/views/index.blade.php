@@ -14,146 +14,147 @@
 </div>
 
 <section class="margin-top-md">
-<div class="drag-gallery js-drag-gallery container max-width-adaptive-lg">
-  <ul class="drag-gallery__list gap-md">
-    <li class="drag-gallery__item">
-      <div class="card">
-        <figure class="card__img">
-          <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
-        </figure>
-      
-        <div class="card__content">
-          <div class="text-component">
-            <h4>Title of the Card</h4>
-            <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
-          </div>
+  <div class="drag-gallery js-drag-gallery container max-width-adaptive-lg">
+    <ul class="drag-gallery__list gap-md">
+      <li class="drag-gallery__item">
+        <div class="card">
+          <figure class="card__img">
+            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+          </figure>
 
-          <div class="author author--meta margin-top-md">
-            <a href="#0" class="author__img-wrapper">
-              <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
-            </a>
-          
-            <div class="author__content text-component v-space-xxs">
-              <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
-              <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+          <div class="card__content">
+            <div class="text-component">
+              <h4>Title of the Card</h4>
+              <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
-          </div>
-          
-        </div>
-      </div>
-    </li>
 
-    <li class="drag-gallery__item">
-      <div class="card">
-        <figure class="card__img">
-          <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
-        </figure>
-      
-        <div class="card__content">
-          <div class="text-component">
-            <h4>Title of the Card</h4>
-            <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
-          </div>
+            <div class="author author--meta margin-top-md">
+              <a href="#0" class="author__img-wrapper">
+                <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
+              </a>
 
-          <div class="author author--meta margin-top-md">
-            <a href="#0" class="author__img-wrapper">
-              <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
-            </a>
-          
-            <div class="author__content text-component v-space-xxs">
-              <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
-              <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              <div class="author__content text-component v-space-xxs">
+                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              </div>
             </div>
+
           </div>
-          
         </div>
-      </div>
-    </li>
+      </li>
 
-    <li class="drag-gallery__item">
-      <div class="card">
-        <figure class="card__img">
-          <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
-        </figure>
-      
-        <div class="card__content">
-          <div class="text-component">
-            <h4>Title of the Card</h4>
-            <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
-          </div>
+      <li class="drag-gallery__item">
+        <div class="card">
+          <figure class="card__img">
+            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+          </figure>
 
-          <div class="author author--meta margin-top-md">
-            <a href="#0" class="author__img-wrapper">
-              <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
-            </a>
-          
-            <div class="author__content text-component v-space-xxs">
-              <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
-              <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+          <div class="card__content">
+            <div class="text-component">
+              <h4>Title of the Card</h4>
+              <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
-          </div>
 
-        </div>
-      </div>
-    </li>
+            <div class="author author--meta margin-top-md">
+              <a href="#0" class="author__img-wrapper">
+                <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
+              </a>
 
-    <li class="drag-gallery__item">
-      <div class="card">
-        <figure class="card__img">
-          <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
-        </figure>
-      
-        <div class="card__content">
-          <div class="text-component">
-            <h4>Title of the Card</h4>
-            <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
-          </div>
-
-          <div class="author author--meta margin-top-md">
-            <a href="#0" class="author__img-wrapper">
-              <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
-            </a>
-          
-            <div class="author__content text-component v-space-xxs">
-              <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
-              <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              <div class="author__content text-component v-space-xxs">
+                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
 
-    <li class="drag-gallery__item">
-      <div class="card">
-        <figure class="card__img">
-          <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
-        </figure>
-      
-        <div class="card__content">
-          <div class="text-component">
-            <h4>Title of the Card</h4>
-            <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
-          </div>
+      <li class="drag-gallery__item">
+        <div class="card">
+          <figure class="card__img">
+            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+          </figure>
 
-          <div class="author author--meta margin-top-md">
-            <a href="#0" class="author__img-wrapper">
-              <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
-            </a>
-          
-            <div class="author__content text-component v-space-xxs">
-              <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
-              <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+          <div class="card__content">
+            <div class="text-component">
+              <h4>Title of the Card</h4>
+              <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
+
+            <div class="author author--meta margin-top-md">
+              <a href="#0" class="author__img-wrapper">
+                <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
+              </a>
+
+              <div class="author__content text-component v-space-xxs">
+                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              </div>
+            </div>
+
           </div>
-          
         </div>
-      </div>
-    </li>
-    
-  </ul>
-  <div aria-hidden="true" class="drag-gallery__gesture-hint"></div>
-</div>
+      </li>
+
+      <li class="drag-gallery__item">
+        <div class="card">
+          <figure class="card__img">
+            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+          </figure>
+
+          <div class="card__content">
+            <div class="text-component">
+              <h4>Title of the Card</h4>
+              <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
+            </div>
+
+            <div class="author author--meta margin-top-md">
+              <a href="#0" class="author__img-wrapper">
+                <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
+              </a>
+
+              <div class="author__content text-component v-space-xxs">
+                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="drag-gallery__item">
+        <div class="card">
+          <figure class="card__img">
+            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+          </figure>
+
+          <div class="card__content">
+            <div class="text-component">
+              <h4>Title of the Card</h4>
+              <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
+            </div>
+
+            <div class="author author--meta margin-top-md">
+              <a href="#0" class="author__img-wrapper">
+                <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
+              </a>
+
+              <div class="author__content text-component v-space-xxs">
+                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </li>
+
+    </ul>
+    <div aria-hidden="true" class="drag-gallery__gesture-hint"></div>
+    <div class="custom-drag-gallery-end-overlay right"></div><!-- /.custom-gallery-end-overlay -->
+  </div><!-- /.drag-gallery js-drag-gallery container max-width-adaptive-lg -->
 </section>
 
 <section class="margin-top-xs">
