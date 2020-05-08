@@ -19,12 +19,16 @@
       <li class="drag-gallery__item">
         <div class="card">
           <figure class="card__img">
-            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            <a href="#0" draggable="false" ondragstart="return false;">
+              <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            </a>
           </figure>
 
           <div class="card__content">
             <div class="text-component">
-              <h4>Title of the Card</h4>
+              <h4 class="author__content">
+                <a href="#0" draggable="false" ondragstart="return false;">Title of the Card</a>
+              </h4>
               <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
 
@@ -46,12 +50,16 @@
       <li class="drag-gallery__item">
         <div class="card">
           <figure class="card__img">
-            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            <a href="#0" draggable="false" ondragstart="return false;">
+              <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            </a>
           </figure>
 
           <div class="card__content">
             <div class="text-component">
-              <h4>Title of the Card</h4>
+              <h4 class="author__content">
+                <a href="#0" draggable="false" ondragstart="return false;">Title of the Card</a>
+              </h4>
               <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
 
@@ -73,12 +81,16 @@
       <li class="drag-gallery__item">
         <div class="card">
           <figure class="card__img">
-            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            <a href="#0" draggable="false" ondragstart="return false;">
+              <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            </a>
           </figure>
 
           <div class="card__content">
             <div class="text-component">
-              <h4>Title of the Card</h4>
+              <h4 class="author__content">
+                <a href="#0" draggable="false" ondragstart="return false;">Title of the Card</a>
+              </h4>
               <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
 
@@ -100,12 +112,16 @@
       <li class="drag-gallery__item">
         <div class="card">
           <figure class="card__img">
-            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            <a href="#0" draggable="false" ondragstart="return false;">
+              <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            </a>
           </figure>
 
           <div class="card__content">
             <div class="text-component">
-              <h4>Title of the Card</h4>
+              <h4 class="author__content">
+                <a href="#0" draggable="false" ondragstart="return false;">Title of the Card</a>
+              </h4>
               <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
 
@@ -127,12 +143,16 @@
       <li class="drag-gallery__item">
         <div class="card">
           <figure class="card__img">
-            <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            <a href="#0" draggable="false" ondragstart="return false;">
+              <img src="{{ asset('assets/img/team-img-5.jpg') }}" alt="Card preview img">
+            </a>
           </figure>
 
           <div class="card__content">
             <div class="text-component">
-              <h4>Title of the Card</h4>
+              <h4 class="author__content">
+                <a href="#0" draggable="false" ondragstart="return false;">Title of the Card</a>
+              </h4>
               <p class="text-sm color-contrast-medium">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, suscipit.</p>
             </div>
 
