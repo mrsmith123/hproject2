@@ -63,4 +63,9 @@ class ForgotPasswordController extends Controller
             ]);
         }
     }
+
+    public function ajaxShowForm(Request $request)
+    {
+        return view('forms.resetpassword');
+    }
 }

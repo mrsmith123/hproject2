@@ -89,4 +89,9 @@ class RegisterController extends Controller
     {
         return redirect('/');
     }
+
+    public function ajaxShowForm(Request $request)
+    {
+        return view('forms.signup');
+    }
 }

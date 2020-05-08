@@ -79,4 +79,9 @@ class LoginController extends Controller
         ]);
     }
 
+    public function ajaxShowForm(Request $request)
+    {
+        return view('forms.signin');
+    }
+
 }
