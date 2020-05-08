@@ -1,4 +1,11 @@
 :root {
-  // radius
-  --radius: 0.25em; // border radius base size
+    // radius
+    --radius: 0.25em; // border radius base size
+}
+
+// custom ajax content loader
+.custom-ajax-frame-loader {
+    text-align: center;
+    padding: 1rem;
+    background-color: inherit;
 }
