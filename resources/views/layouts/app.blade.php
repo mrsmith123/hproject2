@@ -156,7 +156,7 @@
               <div class="mega-nav__icon-btn dropdown__wrapper inline-block js-signin-modal-trigger">
                 <a href="#0" class="color-inherit flex height-100% width-100% flex-center" data-signin="login">
                   <svg class="icon" viewBox="0 0 24 24" data-signin="login">
-                    <title>Go to account settings</title>
+                    <title>Login</title>
                     <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2">
                       <circle cx="12" cy="6" r="4" />
                       <path d="M12 13a8 8 0 00-8 8h16a8 8 0 00-8-8z" />
