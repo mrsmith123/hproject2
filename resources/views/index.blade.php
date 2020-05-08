@@ -29,12 +29,12 @@
             </div>
 
             <div class="author author--meta margin-top-md">
-              <a href="#0" class="author__img-wrapper">
+              <a href="#0" class="author__img-wrapper" draggable="false" ondragstart="return false;">
                 <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
               </a>
 
               <div class="author__content text-component v-space-xxs">
-                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <h4 class="text-base"><a href="#0" rel="author" draggable="false" ondragstart="return false;">Olivia Gribben</a></h4>
                 <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
               </div>
             </div>
@@ -56,12 +56,12 @@
             </div>
 
             <div class="author author--meta margin-top-md">
-              <a href="#0" class="author__img-wrapper">
+              <a href="#0" class="author__img-wrapper" draggable="false" ondragstart="return false;">
                 <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
               </a>
 
               <div class="author__content text-component v-space-xxs">
-                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <h4 class="text-base"><a href="#0" rel="author" draggable="false" ondragstart="return false;">Olivia Gribben</a></h4>
                 <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
               </div>
             </div>
@@ -83,12 +83,12 @@
             </div>
 
             <div class="author author--meta margin-top-md">
-              <a href="#0" class="author__img-wrapper">
+              <a href="#0" class="author__img-wrapper" draggable="false" ondragstart="return false;">
                 <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
               </a>
 
               <div class="author__content text-component v-space-xxs">
-                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <h4 class="text-base"><a href="#0" rel="author" draggable="false" ondragstart="return false;">Olivia Gribben</a></h4>
                 <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
               </div>
             </div>
@@ -110,12 +110,12 @@
             </div>
 
             <div class="author author--meta margin-top-md">
-              <a href="#0" class="author__img-wrapper">
+              <a href="#0" class="author__img-wrapper" draggable="false" ondragstart="return false;">
                 <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
               </a>
 
               <div class="author__content text-component v-space-xxs">
-                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <h4 class="text-base"><a href="#0" rel="author" draggable="false" ondragstart="return false;">Olivia Gribben</a></h4>
                 <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
               </div>
             </div>
@@ -137,12 +137,12 @@
             </div>
 
             <div class="author author--meta margin-top-md">
-              <a href="#0" class="author__img-wrapper">
+              <a href="#0" class="author__img-wrapper" draggable="false" ondragstart="return false;">
                 <img src="{{ asset('assets/img/author-img-1.jpg') }}" alt="Author picture">
               </a>
 
               <div class="author__content text-component v-space-xxs">
-                <h4 class="text-base"><a href="#0" rel="author">Olivia Gribben</a></h4>
+                <h4 class="text-base"><a href="#0" rel="author" draggable="false" ondragstart="return false;">Olivia Gribben</a></h4>
                 <p class="text-sm color-contrast-medium"><time>May 15</time> &mdash; 5 min read</p>
               </div>
             </div>
