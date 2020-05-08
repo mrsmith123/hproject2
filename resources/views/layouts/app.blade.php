@@ -265,67 +265,7 @@
           data-type="login"
         >
           <!-- log in form -->
-          <form action="{{ route('login') }}" method="POST" class="cd-signin-modal__form" id="login-form">@csrf
-            <div class="newsletter-card__feedback newsletter-card__feedback--success margin-top-sm" role="alert"> <!-- /.newsletter-card__feedback--is-visible -->
-              Success!
-            </div><!-- /.newsletter-card__feedback -->
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="signin-email"
-                >E-mail</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signin-email"
-                name="email"
-                type="email"
-                placeholder="E-mail"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
-                for="signin-password"
-                >Password</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="signin-password"
-                name="password"
-                type="text"
-                placeholder="Password"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-              <a
-                href="#0"
-                class="cd-signin-modal__hide-password js-hide-password"
-                >Hide</a
-              >
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <input
-                type="checkbox"
-                id="remember-me"
-                name="remember"
-                checked
-                class="cd-signin-modal__input"
-              />
-              <label for="remember-me">Remember me</label>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width"
-                type="submit"
-                value="Login"
-              />
-            </p>
-          </form>
+          <div id="ajax-signin-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('login.ajax') }}">Loading...</div><!-- /#ajax-signin-form -->
 
           <p class="cd-signin-modal__bottom-message js-signin-modal-trigger">
             <a href="#0" data-signin="reset">Forgot your password?</a>
@@ -338,84 +278,7 @@
           data-type="signup"
         >
           <!-- sign up form -->
-          <form action="{{ route('register') }}" method="POST" class="cd-signin-modal__form" id="sign-up-form">@csrf
-            <div class="newsletter-card__feedback newsletter-card__feedback--success margin-top-sm" role="alert"> <!-- /.newsletter-card__feedback--is-visible -->
-              Success!
-            </div><!-- /.newsletter-card__feedback -->
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"
-                for="username"
-                >Username</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="username"
-                name="username"
-                type="text"
-                placeholder="Username"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="email"
-                >E-mail</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="email"
-                name="email"
-                type="email"
-                placeholder="E-mail"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
-                for="password"
-                >Password</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="password"
-                name="password"
-                type="text"
-                placeholder="Password"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-              <a
-                href="#0"
-                class="cd-signin-modal__hide-password js-hide-password"
-                >Hide</a
-              >
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <input
-                type="checkbox"
-                id="terms"
-                name="terms"
-                class="cd-signin-modal__input"
-              />
-              <label for="terms"
-                >I agree to the <a href="#0">Terms</a></label
-              >
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding"
-                type="submit"
-                value="Create account"
-              />
-            </p>
-          </form>
+          <div id="ajax-signup-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('register.ajax') }}">Loading...</div><!-- /#ajax-signup-form -->
         </div>
         <!-- cd-signin-modal__block -->
 
@@ -424,39 +287,7 @@
           data-type="reset"
         >
           <!-- reset password form -->
-          <p class="cd-signin-modal__message">
-            Lost your password? Please enter your email address. You will
-            receive a link to create a new password.
-          </p>
-
-          <form action="{{ route('password.email') }}" method="POST" class="cd-signin-modal__form" id="reset-password-form">@csrf
-            <div class="newsletter-card__feedback newsletter-card__feedback--success margin-top-sm" role="alert"> <!-- /.newsletter-card__feedback--is-visible -->
-              Success!
-            </div><!-- /.newsletter-card__feedback -->
-            <p class="cd-signin-modal__fieldset">
-              <label
-                class="cd-signin-modal__label cd-signin-modal__label--email cd-signin-modal__label--image-replace"
-                for="reset-email"
-                >E-mail</label
-              >
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
-                id="reset-email"
-                name="email"
-                type="email"
-                placeholder="E-mail"
-              />
-              <span class="cd-signin-modal__error">Error message here!</span>
-            </p>
-
-            <p class="cd-signin-modal__fieldset">
-              <input
-                class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding"
-                type="submit"
-                value="Reset password"
-              />
-            </p>
-          </form>
+          <div id="ajax-resetpassword-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('password.reset.ajax') }}">Loading...</div><!-- /#ajax-resetpassword-form -->
 
           <p class="cd-signin-modal__bottom-message js-signin-modal-trigger">
             <a href="#0" data-signin="login">Back to log-in</a>
@@ -507,8 +338,67 @@
   @guest
   <script>
     (function(){
+
+      var signin_form_loaded = false;
+      var signup_form_loaded = false;
+      var resetpassword_form_loaded = false;
+
+      $(document).on('click', '[data-signin="login"]', function(){
+        var $signin_form = $( "#ajax-signin-form" );
+        var delay = $signin_form.data('delay');
+
+        if (signin_form_loaded) {
+          return;
+        }
+
+        if (typeof $signin_form.data('delay') !== 'undefined') {
+          setTimeout(() => {
+            signin_form_loaded = showDynamicView($signin_form);
+          }, $signin_form.data('delay'));
+          return;
+        }
+
+        signin_form_loaded = showDynamicView($signin_form);
+      });
+
+      $(document).on('click', '[data-signin="signup"]', function(){
+        var $signup_form = $( "#ajax-signup-form" );
+        var delay = $signup_form.data('delay');
+
+        if (signup_form_loaded) {
+          return;
+        }
+
+        if (typeof $signup_form.data('delay') !== 'undefined') {
+          setTimeout(() => {
+            signup_form_loaded = showDynamicView($signup_form);
+          }, $signup_form.data('delay'));
+          return;
+        }
+
+        signup_form_loaded = showDynamicView($signup_form);
+      });
+
+      $(document).on('click', '[data-signin="reset"]', function(){
+        var $resetpassword_form = $( "#ajax-resetpassword-form" );
+        var delay = $resetpassword_form.data('delay');
+
+        if (resetpassword_form_loaded) {
+          return;
+        }
+
+        if (typeof $resetpassword_form.data('delay') !== 'undefined') {
+          setTimeout(() => {
+            resetpassword_form_loaded = showDynamicView($resetpassword_form);
+          }, $resetpassword_form.data('delay'));
+          return;
+        }
+
+        resetpassword_form_loaded = showDynamicView($resetpassword_form);
+      });
+
       // login fomrm
-      $('#login-form').on('submit', function(e){
+      $(document).on('submit', '#login-form', function(e){
         e.preventDefault();
         var $this = $(this);
         var url = $this.attr('action');
@@ -570,7 +460,7 @@
       });
 
       // reset password fomrm
-      $('#reset-password-form').on('submit', function(e){
+      $(document).on('submit', '#reset-password-form', function(e){
         e.preventDefault();
         var $this = $(this);
         var url = $this.attr('action');
@@ -626,7 +516,7 @@
       });
 
       // registration form
-      $('#sign-up-form').on('submit', function(e){
+      $(document).on('submit', '#sign-up-form', function(e){
         e.preventDefault();
         var $this = $(this);
         var url = $this.attr('action');
@@ -707,6 +597,16 @@
         $('.newsletter-card__feedback').removeClass('newsletter-card__feedback--is-visible');
         $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
         $('input').removeClass('cd-signin-modal__input--has-error');
+      }
+
+      // show dynamic view like forms
+      function showDynamicView($element) {
+        $element.load( $element.data('url'), function(response, status, xhr) {
+          var $this = $(this);
+          $this.removeClass('custom-ajax-frame-loader');
+        });
+
+        return true;
       }
 
     })();
