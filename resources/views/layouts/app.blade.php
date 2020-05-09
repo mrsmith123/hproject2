@@ -265,7 +265,7 @@
           data-type="login"
         >
           <!-- log in form -->
-          <div id="ajax-signin-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('login.ajax') }}">Loading...</div><!-- /#ajax-signin-form -->
+          <div id="ajax-signin-form" class="custom-ajax-frame-loader" data-custom="ajax" data-loaded="false" data-url="{{ route('login.ajax') }}">Loading...</div><!-- /#ajax-signin-form -->
 
           <p class="cd-signin-modal__bottom-message js-signin-modal-trigger">
             <a href="#0" data-signin="reset">Forgot your password?</a>
@@ -278,7 +278,7 @@
           data-type="signup"
         >
           <!-- sign up form -->
-          <div id="ajax-signup-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('register.ajax') }}">Loading...</div><!-- /#ajax-signup-form -->
+          <div id="ajax-signup-form" class="custom-ajax-frame-loader" data-custom="ajax" data-loaded="false" data-url="{{ route('register.ajax') }}">Loading...</div><!-- /#ajax-signup-form -->
         </div>
         <!-- cd-signin-modal__block -->
 
@@ -287,7 +287,7 @@
           data-type="reset"
         >
           <!-- reset password form -->
-          <div id="ajax-resetpassword-form" class="custom-ajax-frame-loader" data-custom="ajax" data-delay="1500" data-url="{{ route('password.reset.ajax') }}">Loading...</div><!-- /#ajax-resetpassword-form -->
+          <div id="ajax-resetpassword-form" class="custom-ajax-frame-loader" data-custom="ajax" data-loaded="false" data-url="{{ route('password.reset.ajax') }}">Loading...</div><!-- /#ajax-resetpassword-form -->
 
           <p class="cd-signin-modal__bottom-message js-signin-modal-trigger">
             <a href="#0" data-signin="login">Back to log-in</a>
@@ -339,240 +339,30 @@
   <script>
     (function(){
 
-      var signin_form_loaded = false;
-      var signup_form_loaded = false;
-      var resetpassword_form_loaded = false;
-
-      $(document).on('click', '[data-signin="login"]', function(){
-        var $signin_form = $( "#ajax-signin-form" );
-        var delay = $signin_form.data('delay');
-
-        if (signin_form_loaded) {
-          return;
-        }
-
-        if (typeof $signin_form.data('delay') !== 'undefined') {
-          setTimeout(() => {
-            signin_form_loaded = showDynamicView($signin_form);
-          }, $signin_form.data('delay'));
-          return;
-        }
-
-        signin_form_loaded = showDynamicView($signin_form);
-      });
-
-      $(document).on('click', '[data-signin="signup"]', function(){
-        var $signup_form = $( "#ajax-signup-form" );
-        var delay = $signup_form.data('delay');
-
-        if (signup_form_loaded) {
-          return;
-        }
-
-        if (typeof $signup_form.data('delay') !== 'undefined') {
-          setTimeout(() => {
-            signup_form_loaded = showDynamicView($signup_form);
-          }, $signup_form.data('delay'));
-          return;
-        }
-
-        signup_form_loaded = showDynamicView($signup_form);
-      });
-
-      $(document).on('click', '[data-signin="reset"]', function(){
-        var $resetpassword_form = $( "#ajax-resetpassword-form" );
-        var delay = $resetpassword_form.data('delay');
-
-        if (resetpassword_form_loaded) {
-          return;
-        }
-
-        if (typeof $resetpassword_form.data('delay') !== 'undefined') {
-          setTimeout(() => {
-            resetpassword_form_loaded = showDynamicView($resetpassword_form);
-          }, $resetpassword_form.data('delay'));
-          return;
-        }
-
-        resetpassword_form_loaded = showDynamicView($resetpassword_form);
-      });
-
-      // login fomrm
-      $(document).on('submit', '#login-form', function(e){
-        e.preventDefault();
+      // event handler for clicking any trigger for modal forms
+      $(document).on('click', '[data-signin]', function () {
+        var $selector = null;
         var $this = $(this);
-        var url = $this.attr('action');
-        var method = $this.attr('method');
+        var type = $this.data('signin');
 
-        var email = $('#signin-email').val();
-        var password = $('#signin-password').val();
-        var remember = $('#remember-me').val();
-
-        var $feedback = $this.find('.newsletter-card__feedback');
-
-        $.ajax({
-          url: url,
-          type: method,
-          dataType: 'JSON',
-          data: $this.serialize(),
-          success:function(response){
-            // console.log(response);
-
-            if (response.status === 'success') {
-              $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
-
-              // reset
-              $this[0].reset();
-              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-              $('input').removeClass('cd-signin-modal__input--has-error');
-
-              // redirect
-              window.location.replace(response.data.redirect_url);
-            }else{
-              $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html(response.message);
-
-              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-              $('input').removeClass('cd-signin-modal__input--has-error');
-            }
-          },
-          error: function(response){
-            console.log(response.responseText);
-            var jsonResponse = response.responseJSON;
-            var errors = jsonResponse.errors;
-            var errorsHTML = '';
-
-            console.log('ERROR', response.responseText);
-
-            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-            $('input').removeClass('cd-signin-modal__input--has-error');
-
-            $.each( errors, function( key, value ) {
-              errorsHTML += value[0] + '</br>';
-
-              $('#signin-'+key).addClass('cd-signin-modal__input--has-error');
-
-              $('#signin-'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
-
-            });
-
-          }
-         });
+        switch (type) {
+          case 'login':
+            $selector = $('#ajax-signin-form');
+            break;
+          case 'signup':
+            $selector = $('#ajax-signup-form');
+            break;
+          case 'reset':
+            $selector = $('#ajax-resetpassword-form');
+            break;
+          default:
+            return;
+            break;
+        }
+        showDynamicView($selector);
       });
 
-      // reset password fomrm
-      $(document).on('submit', '#reset-password-form', function(e){
-        e.preventDefault();
-        var $this = $(this);
-        var url = $this.attr('action');
-        var method = $this.attr('method');
-
-        var email = $('#reset-email').val();
-
-        var $feedback = $this.find('.newsletter-card__feedback');
-
-        $.ajax({
-          url: url,
-          type: method,
-          dataType: 'JSON',
-          data: $this.serialize(),
-          success:function(response){
-            // console.log(response);
-
-            if (response.status === 'success') {
-              $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
-
-              // reset
-              $this[0].reset();
-              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-              $('input').removeClass('cd-signin-modal__input--has-error');
-
-            }else{
-              $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html(response.message);
-
-              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-              $('input').removeClass('cd-signin-modal__input--has-error');
-            }
-          },
-          error: function(response){
-            console.log(response.responseText);
-            var jsonResponse = response.responseJSON;
-            var errors = jsonResponse.errors;
-            var errorsHTML = '';
-
-            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-            $('input').removeClass('cd-signin-modal__input--has-error');
-
-            $.each( errors, function( key, value ) {
-              errorsHTML += value[0] + '</br>';
-
-              $('#reset-'+key).addClass('cd-signin-modal__input--has-error');
-
-              $('#reset-'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
-
-            });
-
-          }
-         });
-      });
-
-      // registration form
-      $(document).on('submit', '#sign-up-form', function(e){
-        e.preventDefault();
-        var $this = $(this);
-        var url = $this.attr('action');
-        var method = $this.attr('method');
-
-        var username = $('#username').val();
-        var email = $('#email').val();
-        var password = $('#password').val();
-        var terms = $('#terms').val();
-
-        var $feedback = $this.find('.newsletter-card__feedback');
-
-        $.ajax({
-          url: url,
-          type: method,
-          dataType: 'JSON',
-          data: $this.serialize(),
-          success:function(response){
-            // console.log(response);
-
-            if (response.status === 'success') {
-              $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
-
-              // reset
-              $this[0].reset();
-              $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-            $('input').removeClass('cd-signin-modal__input--has-error');
-            }
-          },
-          error: function(response){
-            var jsonResponse = response.responseJSON;
-            var errors = jsonResponse.errors;
-            var errorsHTML = '';
-
-            // console.log(errors);
-
-            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
-            $('input').removeClass('cd-signin-modal__input--has-error');
-
-            $.each( errors, function( key, value ) {
-              errorsHTML += value[0] + '</br>';
-
-              if (key === 'terms') {
-                $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html('<strong>Error</strong> </br>'+ value[0]);
-              }else{
-                $('#'+key).addClass('cd-signin-modal__input--has-error');
-
-                $('#'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
-              }
-
-            });
-
-          }
-         });
-      });
-
+      // watch for keydown
       $(document).on('keydown', function(event){
         // check if pressed on ESC key
         if (event.which === 27) {
@@ -580,13 +370,12 @@
         }
       });
 
-      // reseta form when modal is clicked
-      $('.js-signin-modal').on('click', function(event){
+      // reset form when modal is clicked
+      $(document).on('click', '.js-signin-modal', function(event){
         // if not the modal, then just do nothing
         if (event.target !== this){
           return;
         }
-
         // else reset forms
         resetForms();
       });
@@ -601,12 +390,20 @@
 
       // show dynamic view like forms
       function showDynamicView($element) {
-        $element.load( $element.data('url'), function(response, status, xhr) {
+        var loaded = $element.data('loaded');
+        var url = $element.data('url');
+
+        // if true, don't reload
+        if (loaded == 'true') {
+          return;
+        }
+
+        $element.load( url, function(response, status, xhr) {
           var $this = $(this);
           $this.removeClass('custom-ajax-frame-loader');
         });
+        $element.data('loaded', 'true');
 
-        return true;
       }
 
     })();
