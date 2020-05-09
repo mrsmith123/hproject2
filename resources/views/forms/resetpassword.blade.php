@@ -31,3 +31,63 @@
     />
   </p>
 </form>
+
+<script>
+  (function(){
+    // reset password form
+    $(document).on('submit', '#reset-password-form', function(e){
+      e.preventDefault();
+      var $this = $(this);
+      var url = $this.attr('action');
+      var method = $this.attr('method');
+
+      var email = $('#reset-email').val();
+
+      var $feedback = $this.find('.newsletter-card__feedback');
+
+      $.ajax({
+        url: url,
+        type: method,
+        dataType: 'JSON',
+        data: $this.serialize(),
+        success:function(response){
+          // console.log(response);
+
+          if (response.status === 'success') {
+            $feedback.removeClass('newsletter-card__feedback--error').addClass('newsletter-card__feedback--success newsletter-card__feedback--is-visible').html('<strong>Success!</strong> ' + response.message);
+
+            // reset
+            $this[0].reset();
+            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+            $('input').removeClass('cd-signin-modal__input--has-error');
+
+          }else{
+            $feedback.removeClass('newsletter-card__feedback--success').addClass('newsletter-card__feedback--error newsletter-card__feedback--is-visible').html(response.message);
+
+            $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+            $('input').removeClass('cd-signin-modal__input--has-error');
+          }
+        },
+        error: function(response){
+          console.log(response.responseText);
+          var jsonResponse = response.responseJSON;
+          var errors = jsonResponse.errors;
+          var errorsHTML = '';
+
+          $('.cd-signin-modal__error').removeClass('cd-signin-modal__error--is-visible');
+          $('input').removeClass('cd-signin-modal__input--has-error');
+
+          $.each( errors, function( key, value ) {
+            errorsHTML += value[0] + '</br>';
+
+            $('#reset-'+key).addClass('cd-signin-modal__input--has-error');
+
+            $('#reset-'+key+' + .cd-signin-modal__error').addClass('cd-signin-modal__error--is-visible').html(value[0]);
+
+          });
+
+        }
+        });
+    });
+  })();
+</script>
