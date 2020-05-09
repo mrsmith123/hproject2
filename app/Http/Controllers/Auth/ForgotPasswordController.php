@@ -66,6 +66,9 @@ class ForgotPasswordController extends Controller
 
     public function ajaxShowForm(Request $request)
     {
+        /* Sleep to see loading text on form. Please remove this on production. */
+        sleep(2);
+
         return view('forms.resetpassword');
     }
 }
