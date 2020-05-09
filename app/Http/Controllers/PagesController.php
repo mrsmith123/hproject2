@@ -29,4 +29,8 @@ class PagesController extends Controller
     public function profile(){
         return view('pages.profile');
     }
+
+    public function admin(){
+        return view('pages.admin');
+    }
 }
