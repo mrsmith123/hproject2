@@ -23,14 +23,9 @@
             </button>
   
             <ul class="subnav__list">
-              <li class="subnav__item"><a href="#0" class="subnav__link" aria-current=page>Intro</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Features</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Photos</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Videos</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Specs</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Support</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Compare</a></li>
-              <li class="subnav__item"><a href="#0" class="subnav__link">Buy</a></li>
+              <li class="subnav__item"><a href="#0" class="subnav__link" aria-current=page>Users</a></li>
+              <li class="subnav__item"><a href="#0" class="subnav__link">Blogs</a></li>
+              <li class="subnav__item"><a href="#0" class="subnav__link">Scrape</a></li>
             </ul>
           </nav>
         </div>
@@ -38,7 +33,43 @@
     </div>
   </div>
 
-<div class="int-table int-table--sticky-header text-sm js-int-table container max-width-adaptive-lg margin-top-xxxxl">
+<div class="int-table int-table--sticky-header text-sm js-int-table container max-width-adaptive-lg margin-top-xxxl">
+
+    <div class="flex flex-wrap gap-sm margin-bottom-xxl margin-top-xs">
+        <button class="btn btn--primary">Delete<span class="counter counter--light margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
+        <button class="btn btn--subtle">Suspend<span class="counter counter--dark margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
+        <div class="flex flex-column items-start">
+            <label class="form-label margin-bottom-xxxs" for="selectThis"></label>
+            
+            <div class="select inline-block js-select" data-trigger-class="btn btn--subtle">
+              <select name="selectThis" id="selectThis">
+                <optgroup label="Amount to show">
+                  <option value="0" selected>Show 25</option>
+                  <option value="1">Show 50</option>
+                  <option value="2">Show 100</option>
+                  <option value="2">Show 150</option>
+                  <option value="2">Show 200</option>
+                </optgroup>
+              </select>
+              
+              <svg class="icon icon--xs margin-left-xxxs" aria-hidden="true" viewBox="0 0 16 16"><polygon points="3,5 8,11 13,5 "></polygon></svg>
+            </div>
+          </div>
+
+          <div class="search-input search-input--icon-right container max-width-xxxs">
+            <input class="form-control width-100%" type="search" name="searchInputX" id="searchInputX" placeholder="Search..." aria-label="Search">
+            <button class="search-input__btn">
+              <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
+            </button>
+          </div>
+
+      </div>
+
+
+
+
+
+
     <div class="int-table__inner">
       <table class="int-table__table" aria-label="Interactive table example">
         <thead class="int-table__header js-int-table__header">
@@ -364,6 +395,48 @@
     </div>
   </div>
   
+  <nav class="pagination " aria-label="Pagination">
+    <ol class="pagination__list flex flex-wrap gap-xxxs justify-center margin-top-xxl margin-bottom-xxl">
+      <li>
+        <a href="#0" class="pagination__item pagination__item--disabled" aria-label="Go to previous page">
+          <svg class="icon margin-right-xxxs" aria-hidden="true" viewBox="0 0 16 16"><title>Previous</title><g stroke-width="1" stroke="currentColor"><polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.5,3.5 5,8 9.5,12.5 "></polyline></g></svg>
+          <span>Prev</span>
+        </a>
+      </li>
+  
+      <li class="display@sm">
+        <a href="#0" class="pagination__item" aria-label="Go to page 1">1</a>
+      </li>
+  
+      <li class="display@sm">
+        <a href="#0" class="pagination__item" aria-label="Go to page 2">2</a>
+      </li>
+  
+      <li class="display@sm">
+        <a href="#0" class="pagination__item pagination__item--selected" aria-label="Current Page, page 3" aria-current="page">3</a>
+      </li>
+  
+      <li class="display@sm">
+        <a href="#0" class="pagination__item" aria-label="Go to page 4">4</a>
+      </li>
+  
+      <li class="display@sm" aria-hidden="true">
+        <span class="pagination__item pagination__item--ellipsis">...</span>
+      </li>
+  
+      <li class="display@sm">
+        <a href="#0" class="pagination__item" aria-label="Go to page 20">20</a>
+      </li>
+  
+      <li>
+        <a href="#0" class="pagination__item" aria-label="Go to next page">
+          <span>Next</span>
+          <svg class="icon margin-left-xxxs" aria-hidden="true" viewBox="0 0 16 16"><title>Next</title><g stroke-width="1" stroke="currentColor"><polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="6.5,3.5 11,8 6.5,12.5 "></polyline></g></svg>
+        </a>
+      </li>
+    </ol>
+  </nav>
+
   <menu id="menu-example" class="menu js-menu">
     <li role="menuitem">
       <span class="menu__content js-menu__content">
@@ -386,4 +459,6 @@
       </span>
     </li>
   </menu>
+
+
 @endsection
