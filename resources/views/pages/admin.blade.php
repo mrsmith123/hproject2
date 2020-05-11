@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="bg-contrast-lower">
+<div class="bg-contrast-lower js-hide-nav js-hide-nav--sub hide-nav z-index-2">
     <div class="container max-width-lg">
       <div class="subnav  js-subnav">
         <button class="reset btn btn--subtle margin-y-sm subnav__control js-subnav__control">
@@ -26,6 +26,8 @@
               <li class="subnav__item"><a href="#0" class="subnav__link" aria-current=page>Users</a></li>
               <li class="subnav__item"><a href="#0" class="subnav__link">Blogs</a></li>
               <li class="subnav__item"><a href="#0" class="subnav__link">Scrape</a></li>
+              <li class="subnav__item"><a href="#0" class="subnav__link">SEO</a></li>
+              <li class="subnav__item"><a href="#0" class="subnav__link">Settings</a></li>
             </ul>
           </nav>
         </div>
@@ -157,7 +159,7 @@
             </th>
   
             <th class="int-table__cell int-table__cell--th text-left">
-              Description
+              Status
             </th>
   
             <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort" data-date-format="dd-mm-yyyy">
@@ -185,7 +187,7 @@
               </ul>
             </th>
   
-            <th class="int-table__cell int-table__cell--th text-left">Location</th>
+            <th class="int-table__cell int-table__cell--th text-left">Username</th>
             <th class="int-table__cell int-table__cell--th text-right">Action</th>
           </tr>
         </thead>
@@ -201,7 +203,7 @@
             <td class="int-table__cell">1</td>
             <td class="int-table__cell"><a href="#0">Bryony Mcmillan</a></td>
             <td class="int-table__cell">r.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">01/01/2021</td>
             <td class="int-table__cell">Hungary</td>
             <td class="int-table__cell">
@@ -221,7 +223,7 @@
             <td class="int-table__cell">2</td>
             <td class="int-table__cell"><a href="#0">Hetty Maxwell</a></td>
             <td class="int-table__cell">f.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">11/10/2020</td>
             <td class="int-table__cell">United Kingdom</td>
             <td class="int-table__cell">
@@ -241,7 +243,7 @@
             <td class="int-table__cell">3</td>
             <td class="int-table__cell"><a href="#0">Honey Leblanc</a></td>
             <td class="int-table__cell">v.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">17/09/2020</td>
             <td class="int-table__cell">Maldives</td>
             <td class="int-table__cell">
@@ -261,7 +263,7 @@
             <td class="int-table__cell">4</td>
             <td class="int-table__cell"><a href="#0">Maira Hodges</a></td>
             <td class="int-table__cell">a.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Suspended</td>
             <td class="int-table__cell">04/08/2020</td>
             <td class="int-table__cell">Iceland</td>
             <td class="int-table__cell">
@@ -281,7 +283,7 @@
             <td class="int-table__cell">5</td>
             <td class="int-table__cell"><a href="#0">Nigel Lang</a></td>
             <td class="int-table__cell">g.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">03/07/2020</td>
             <td class="int-table__cell">Italy</td>
             <td class="int-table__cell">
@@ -301,7 +303,7 @@
             <td class="int-table__cell">6</td>
             <td class="int-table__cell"><a href="#0">Saif Acevedo</a></td>
             <td class="int-table__cell">l.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Suspended</td>
             <td class="int-table__cell">21/05/2020</td>
             <td class="int-table__cell">Argentina</td>
             <td class="int-table__cell">
@@ -321,7 +323,7 @@
             <td class="int-table__cell">7</td>
             <td class="int-table__cell"><a href="#0">Isaak O'Gallagher</a></td>
             <td class="int-table__cell">b.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">11/04/2020</td>
             <td class="int-table__cell">Maldives</td>
             <td class="int-table__cell">
@@ -341,7 +343,7 @@
             <td class="int-table__cell">8</td>
             <td class="int-table__cell"><a href="#0">Lucille Arias</a></td>
             <td class="int-table__cell">m.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">05/03/2020</td>
             <td class="int-table__cell">Thailand</td>
             <td class="int-table__cell">
@@ -361,7 +363,7 @@
             <td class="int-table__cell">9</td>
             <td class="int-table__cell"><a href="#0">Kendall Rankin</a></td>
             <td class="int-table__cell">e.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">02/02/2020</td>
             <td class="int-table__cell">Austria</td>
             <td class="int-table__cell">
@@ -381,7 +383,7 @@
             <td class="int-table__cell">10</td>
             <td class="int-table__cell"><a href="#0">Raihan Boone</a></td>
             <td class="int-table__cell">c.email@email.com</td>
-            <td class="int-table__cell max-width-xxxxs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat eveniet nisi itaque!</td>
+            <td class="int-table__cell max-width-xxxxs">Active</td>
             <td class="int-table__cell">01/01/2020</td>
             <td class="int-table__cell">USA</td>
             <td class="int-table__cell">
