@@ -14,7 +14,7 @@
     
           <div class="col-6@md col-5@xl">
             <div class="text-component">
-              <h2 class="articles-v3__headline"><a href="#0">Lorem ipsum dolor sit.</a></h2>
+              <h2 class="articles-v3__headline"><a href="#0">Lorem ipsum dolor sit dolor sit.</a></h2>
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur!</p>
             </div>
     

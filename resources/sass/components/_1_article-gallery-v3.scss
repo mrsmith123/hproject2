@@ -6,7 +6,11 @@ Descr: A gallery of blog articles
 Usage: codyhouse.co/license
 
 -------------------------------- */
-
+@media (max-width:1000px){
+    .articles-v3__img{
+      margin: -34px -10px -40px -20px;
+    }
+  }
 
 .articles-v3__img {
   display: block;
@@ -25,7 +29,9 @@ Usage: codyhouse.co/license
 }
 
 .articles-v3__headline {
-  font-size: var(--text-xl);
+  font-size: var(--text-xxl);
+  font-family: roboto slab;
+  padding-bottom: var(--space-xxs);
 
   a {
     color: var(--color-contrast-higher);
