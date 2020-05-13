@@ -6,16 +6,16 @@
     <ul class="grid gap-lg">
       <li>
         <div class="grid gap-md items-start">
-          <a href="#0" class="articles-v3__img col-6@md col-10@xl">
+          <a href="#0" class="articles-v3__img col-6@md col-9@xl">
             <figure class="media-wrapper">
-              <img src="{{ asset('assets/img/team-img-12.jpg') }}" alt="Image description">
+              <img src="{{ asset('assets/img/team-img-13.jpg') }}" alt="Image description">
             </figure>
           </a>
     
-          <div class="col-6@md col-5@xl">
+          <div class="col-6@md col-6@xl">
             <div class="text-component">
               <h2 class="articles-v3__headline"><a href="#0">Lorem ipsum dolor sit dolor sit.</a></h2>
-              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur!</p>
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur! Accusamus nihil rem aliquid perferendis delectus in esse praesentium necessitatibus rerum consectetur!</p>
             </div>
     
             <div class="articles-v3__author">
