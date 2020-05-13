@@ -10,7 +10,8 @@ Usage: codyhouse.co/license
 
 // intro
 .footer-v5__intro {
-  border-bottom: 1px solid var(--color-contrast-low);
+  border-bottom: 1px solid var(--color-contrast-lower);
+  padding-bottom: var(--space-sm);
 
   a {
     color: var(--color-contrast-medium);
@@ -84,7 +85,6 @@ Usage: codyhouse.co/license
 
 // colophon
 .footer-v5__colophon {
-  border-top: 1px solid var(--color-contrast-low);
   padding-top: var(--space-sm);
 }
 

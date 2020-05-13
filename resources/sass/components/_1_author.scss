@@ -46,10 +46,17 @@ Usage: codyhouse.co/license
       }
     }
   }
+
+  .author__content {
+    padding-bottom: var(--space-xxxs);
+    color: var(--color-contrast-high);
+    font-weight: 390;
+    font-family: roboto slab;
+  }
   
   // --meta -> show date + read time
   .author--meta {
-    --author-img-size: 2em;
+    --author-img-size: 1.7em;
     align-items: center;
     grid-gap: var(--space-xs);
   }

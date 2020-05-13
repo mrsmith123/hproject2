@@ -37,13 +37,13 @@
 
 <div class="int-table int-table--sticky-header text-sm js-int-table container max-width-adaptive-lg margin-top-xxxl">
 
-    <div class="flex flex-wrap gap-sm margin-bottom-xxl margin-top-xs">
+    <div class="flex flex-wrap gap-sm margin-bottom-xxl margin-top-xxxs">
         <button class="btn btn--primary">Delete<span class="counter counter--light margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
         <button class="btn btn--subtle">Suspend<span class="counter counter--dark margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
         <div class="flex flex-column items-start">
-            <label class="form-label margin-bottom-xxxs" for="selectThis"></label>
+            <label class="form-label" for="selectThis"></label>
             
-            <div class="select inline-block js-select" data-trigger-class="btn btn--subtle">
+            <div class="select inline-block js-select" data-trigger-class="btn btn--subtle padding-sm">
               <select name="selectThis" id="selectThis">
                 <optgroup label="Amount to show">
                   <option value="0" selected>Show 25</option>
@@ -450,7 +450,7 @@
     <li role="menuitem">
       <span class="menu__content js-menu__content">
         <svg class="icon menu__icon" aria-hidden="true" viewBox="0 0 16 16"><path d="M15,4H1C0.4,4,0,4.4,0,5v10c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V5C16,4.4,15.6,4,15,4z M14,14H2V6h12V14z"></path><rect x="2" width="12" height="2"></rect></svg>
-        <span>Copy</span>
+        <span>Suspend</span>
       </span>
     </li>
   

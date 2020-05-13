@@ -2,7 +2,7 @@
 @section('content')
 <article class="padding-bottom-lg">
   <div class="t-article-v2__hero">
-    <div class="t-article-v2__cover" aria-hidden="true" style="background-image: url('https://media.urbanistnetwork.com/saigoneer/xplr-images/premium-content/after5/dj1h.jpg');"></div>
+    <div class="t-article-v2__cover" aria-hidden="true" style="background-image: url('{{ asset('assets/img/team-img-13.jpg') }}');"></div>
 
     <div class="t-article-v2__intro container max-width-adaptive-sm margin-bottom-lg">
       <div class="text-component text-center">

@@ -43,6 +43,7 @@ Usage: codyhouse.co/license
 // logo
 .mega-nav__logo {
     display: block;
+    padding-bottom: 50px;
     width: 104px; // logo width
     height: 30px; // logo height
 
@@ -379,7 +380,8 @@ Usage: codyhouse.co/license
 
     .mega-nav__logo {
         flex-shrink: 0;
-        margin-right: var(--space-xxxxl);
+        margin-right: 200px;
+        padding-bottom: 50px;
     }
 
     .mega-nav__nav {
