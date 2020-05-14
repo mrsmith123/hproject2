@@ -7,6 +7,7 @@ Usage: codyhouse.co/license
 
 -------------------------------- */
 
+
 :root {
     --mega-nav-height: 50px;
     --mega-nav-content-max-width: var(
@@ -41,18 +42,13 @@ Usage: codyhouse.co/license
 }
 
 // logo
-.mega-nav__logo {
-    display: block;
-    padding-bottom: 50px;
-    width: 70px; // logo width
-    height: 30px; // logo height
 
-    > * {
-        // logo SVG
-        width: inherit;
-        height: inherit;
-    }
+.logo {
+    font-family: 'Montserrat Subrayada', sans-serif;
+    font-size: 30px;
 }
+
+
 
 // mobile buttons
 .mega-nav__icon-btns {
@@ -381,7 +377,6 @@ Usage: codyhouse.co/license
     .mega-nav__logo {
         flex-shrink: 0;
         margin-right: 200px;
-        padding-bottom: 50px;
     }
 
     .mega-nav__nav {
