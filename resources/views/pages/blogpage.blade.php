@@ -77,6 +77,20 @@
             <img src="../../../app/assets/img/article-example-img-1.svg" alt="Image description here">
             <figcaption>Image caption</figcaption>
           </figure>
+
+          <div class="sticky-banner sticky-banner--bottom bg-contrast-higher bg-opacity-80% backdrop-blur-10 color-bg js-sticky-banner" data-target-in="#stickt-banner-target">
+            <!--👇 sticky banner content -->
+            <p class="text-center padding-md">Sticky Banner</p>
+          </div>
+          
+          <section class="max-height-100vh bg-contrast-lower" id="stickt-banner-target">
+            <div class="container max-width-sm min-height-100vh flex flex-center">
+              <div class="text-component text-center">
+                <h1>Sticky Banner</h1>
+                <p>👇 The banner becomes visible when you scroll past this section.</p>
+              </div>
+            </div>
+          </section>
     
           <figure class="col">
             <img src="../../../app/assets/img/article-example-img-1.svg" alt="Image description here">
@@ -98,6 +112,7 @@
   </div>
 
 </article>
+
 
 <section>
   <div class="container max-width-adaptive-sm">

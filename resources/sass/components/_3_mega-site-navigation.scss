@@ -44,7 +44,7 @@ Usage: codyhouse.co/license
 .mega-nav__logo {
     display: block;
     padding-bottom: 50px;
-    width: 104px; // logo width
+    width: 70px; // logo width
     height: 30px; // logo height
 
     > * {
@@ -412,7 +412,8 @@ Usage: codyhouse.co/license
         padding: 0 var(--space-md);
         height: 100%;
         font-size: var(--text-sm);
-        color: var(--color-contrast-higher);
+        font-weight: 410;
+        color: var(--color-contrast-high);
         text-decoration: none;
         transition: 0.2s;
 
