@@ -20,6 +20,7 @@ Route::get('/mangas', 'PagesController@mangas');
 Route::get('/blogpage', 'PagesController@blogpage');
 Route::get('/venue', 'PagesController@venue');
 Route::get('/about', 'PagesController@about');
+Route::get('/contact', 'PagesController@contact');
 Route::get('/profile', 'PagesController@profile');
 Route::get('/admin', 'PagesController@admin');
 Route::get('/home', 'HomeController');

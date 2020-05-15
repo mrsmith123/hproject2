@@ -8,7 +8,7 @@
         <div class="grid gap-md items-start">
           <a href="#0" class="articles-v3__img col-6@md col-9@xl">
             <figure class="media-wrapper">
-              <img src="{{ asset('assets/img/team-img-13.jpg') }}" alt="Image description">
+              <img src="{{ asset('assets/img/team-img-12.jpg') }}" alt="Image description">
             </figure>
           </a>
     

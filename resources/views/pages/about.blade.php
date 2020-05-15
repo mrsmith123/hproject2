@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
-<section class="has-section-divider-bottom bg-contrast-low">
+<section class="has-section-divider-bottom bg-contrast-lower">
   <div class="padding-y-xxl">
     <div class="container max-width-adaptive-lg">
       <div class="text-component">
-        <h1>About us 👇</h1>
+        <h1 class="padding-bottom-md">About us</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam eos autem et earum dolorem voluptates rerum eius ab nam architecto. Magnam debitis labore dolorem, adipisci porro soluta ipsam, recusandae obcaecati velit nihil eos rem quo! Optio unde cumque laudantium aut?
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam eos autem et earum dolorem voluptates rerum eius ab nam architecto. Magnam debitis labore dolorem, adipisci porro soluta ipsam, recusandae obcaecati velit nihil eos rem quo! Optio unde cumque laudantium aut?
         </p>
