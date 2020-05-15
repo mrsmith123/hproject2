@@ -36,6 +36,22 @@
 
   <p class="cd-signin-modal__fieldset">
     <label
+      class="cd-signin-modal__label cd-signin-modal__label--username cd-signin-modal__label--image-replace"
+      for="full_name"
+      >Full name</label
+    >
+    <input
+      class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+      id="full_name"
+      name="full_name"
+      type="text"
+      placeholder="Full name"
+    />
+    <span class="cd-signin-modal__error">Error message here!</span>
+  </p>
+
+  <p class="cd-signin-modal__fieldset">
+    <label
       class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
       for="password"
       >Password</label
@@ -46,6 +62,28 @@
       name="password"
       type="text"
       placeholder="Password"
+    />
+    <span class="cd-signin-modal__error">Error message here!</span>
+    <a
+      href="#0"
+      class="cd-signin-modal__hide-password js-hide-password"
+      >Hide</a
+    >
+    <span class="cd-signin-modal__error">Error message here!</span>
+  </p>
+
+  <p class="cd-signin-modal__fieldset">
+    <label
+      class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace"
+      for="password_confirmation"
+      >Retype password</label
+    >
+    <input
+      class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border"
+      id="password_confirmation"
+      name="password_confirmation"
+      type="text"
+      placeholder="Retype password"
     />
     <span class="cd-signin-modal__error">Error message here!</span>
     <a
@@ -88,7 +126,9 @@
 
       var username = $('#username').val();
       var email = $('#email').val();
+      var full_name = $('#full_name').val();
       var password = $('#password').val();
+      var password_confirmation = $('#password_confirmation').val();
       var terms = $('#terms').val();
 
       var $feedback = $this.find('.newsletter-card__feedback');
