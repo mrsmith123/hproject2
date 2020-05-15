@@ -27,7 +27,7 @@
   <header class="mega-nav mega-nav--mobile mega-nav--desktop@md position-relative js-mega-nav hide-nav js-hide-nav js-hide-nav--main">
     <div class="mega-nav__container">
       <!-- 👇 logo -->
-      <a href="#0" class="mega-nav__logo">
+      <a href="http://127.0.0.1:8000/" class="mega-nav__logo">
         <h2 class="logo">Curateship</h2>
       </a>
 
@@ -141,11 +141,16 @@
             </li>
             <!-- 👇 link -->
             <li class="mega-nav__item">
-              <a href="http://127.0.0.1:8000/" class="mega-nav__control">Home</a>
+              <a href="http://127.0.0.1:8000/" class="mega-nav__control">Food</a>
             </li>
             <li class="mega-nav__item">
-              <a href="http://127.0.0.1:8000/mangas" class="mega-nav__control">Mangas</a>
+              <a href="http://127.0.0.1:8000/mangas" class="mega-nav__control">Drinks</a>
             </li>
+            <li class="mega-nav__item">
+              <a href="http://127.0.0.1:8000/mangas" class="mega-nav__control">Fashion</a>
+            </li>
+            <li class="mega-nav__item">
+              <a href="http://127.0.0.1:8000/mangas" class="mega-nav__control">Life</a>
           </ul>
 
           <ul class="mega-nav__items js-main-nav custom-mega-nav__items-mobile">
@@ -308,8 +313,8 @@
     <div class="footer-v5__intro">
       <nav>
         <ul class="footer-v5__popular-links">
-          <li><a href="#0">About Us</a></li>
-          <li><a href="#0">Contact</a></li>
+          <li><a href="http://127.0.0.1:8000/about">About Us</a></li>
+          <li><a href="http://127.0.0.1:8000/contact">Contact</a></li>
           <li><a href="#0">Advertise</a></li>
         </ul>
       </nav>
