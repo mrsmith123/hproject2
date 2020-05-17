@@ -40,8 +40,8 @@ Route::get('/resetpassword',[
   'uses' => '\App\Http\Controllers\Auth\ForgotPasswordController@ajaxShowForm'
 ]);
 
-Route::group(['middleware' => 'checkusersession'], function(){
-    Route::get('/admin',[
-        'uses' => 'PagesController@admin'
-    ]);
+Route::group(['middleware' => 'auth'], function(){
+  Route::group(['middleware' => 'role:admin'], function(){
+      Route::get('/admin', 'PagesController@admin');
+  });
 });
