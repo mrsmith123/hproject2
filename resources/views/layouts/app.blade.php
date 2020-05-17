@@ -450,6 +450,12 @@
 
       }
 
+      // Check hash value if `login`
+      // Then show Sign in modal
+      if (location.hash.substr(1) == 'login') {
+        $('[data-signin="login"]')[0].click();
+      }
+
     })();
   </script>
   @endguest
