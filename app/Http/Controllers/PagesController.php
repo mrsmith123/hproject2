@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 class PagesController extends Controller
 {
     public function index(){
@@ -35,6 +37,10 @@ class PagesController extends Controller
     }
 
     public function admin(){
-        return view('pages.admin');
+        $users = User::select('users.*', 'roles.name as role')
+                    ->leftJoin('roles', 'roles.permission', '=', 'users.permission')
+                    ->paginate(10);
+
+        return view('pages.admin', compact('users'));
     }
 }
