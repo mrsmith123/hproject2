@@ -22,7 +22,6 @@ Route::get('/venue', 'PagesController@venue');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 Route::get('/profile', 'PagesController@profile');
-Route::get('/admin', 'PagesController@admin');
 Route::get('/home', 'HomeController');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
@@ -40,3 +39,9 @@ Route::get('/resetpassword',[
   'as'   => 'password.reset.ajax',
   'uses' => '\App\Http\Controllers\Auth\ForgotPasswordController@ajaxShowForm'
 ]);
+
+Route::group(['middleware' => 'checkusersession'], function(){
+    Route::get('/admin',[
+        'uses' => 'PagesController@admin'
+    ]);
+});
