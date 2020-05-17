@@ -15,10 +15,11 @@ class CheckUserSession
      */
     public function handle($request, Closure $next)
     {
-        if(session('user_id') === null){
-            return redirect('/#login');
+        if(auth()->user()){
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/#login');
+
     }
 }
