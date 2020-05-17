@@ -422,6 +422,10 @@
         }
         // else reset forms
         resetForms();
+
+        // remove hash when the modal closes
+        // eg. `/#login`
+        history.pushState("", document.title, window.location.pathname + window.location.search);
       });
 
       // resets form inputs, feedbacks, input errors
