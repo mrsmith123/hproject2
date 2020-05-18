@@ -472,6 +472,15 @@
       $(document).on('input', '.js-int-table__select-all, .js-int-table__select-row', function(){
         var $checkBoxesChecked = $('.js-int-table__select-row:checked');
         var $totalSelected = $('.table-total-selected');
+        var $inputHiddenTemplate = $("#selected-id-template").html().trim();
+
+        $('.bulk-selected-ids').html('');
+
+        $checkBoxesChecked.each(function(){
+          var $this = $(this);
+          var $selectedID = $inputHiddenTemplate.replace(/@{{value}}/gi, $this.val());
+          $('.bulk-selected-ids').append($selectedID);
+        });
 
         $totalSelected.text($checkBoxesChecked.length);
       });
