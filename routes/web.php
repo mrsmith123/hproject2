@@ -58,5 +58,7 @@ Route::group(['middleware' => 'auth'], function(){
 
       Route::get('/admin/users/edit/{id}', 'UserController@edit');
       Route::post('/admin/users/update/{id}', 'UserController@update');
+
+      Route::get('/admin/users/suspend/{id}', 'UserController@suspend');
   });
 });
