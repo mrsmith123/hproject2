@@ -186,9 +186,29 @@
               </ul>
             </th>
 
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort">
+              <div class="flex items-center">
+                <span>Status</span>
 
-            <th class="int-table__cell int-table__cell--th text-left">
-              Status
+                <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12"><polygon class="arrow-up" points="6 0 10 5 2 5 6 0"/><polygon class="arrow-down" points="6 12 2 7 10 7 6 12"/></svg>
+              </div>
+
+              <ul class="sr-only js-int-table__sort-list">
+                <li>
+                  <input type="radio" name="sortingStatus" id="sortingStatusNone" value="none" checked>
+                  <label for="sortingStatusNone">No sorting</label>
+                </li>
+
+                <li>
+                  <input type="radio" name="sortingStatus" id="sortingStatusAsc" value="asc">
+                  <label for="sortingStatusAsc">Sort in ascending order</label>
+                </li>
+
+                <li>
+                  <input type="radio" name="sortingStatus" id="sortingStatusDes" value="desc">
+                  <label for="sortingStatusDes">Sort in descending order</label>
+                </li>
+              </ul>
             </th>
 
             <th class="int-table__cell int-table__cell--th text-right">Action</th>
