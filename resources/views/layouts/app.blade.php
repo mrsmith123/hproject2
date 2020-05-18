@@ -463,6 +463,22 @@
     })();
   </script>
   @endguest
+
+  @auth
+  <script>
+    (function(){
+
+      // Interactive table checkbox toggle
+      $(document).on('input', '.js-int-table__select-all, .js-int-table__select-row', function(){
+        var $checkBoxesChecked = $('.js-int-table__select-row:checked');
+        var $totalSelected = $('.table-total-selected');
+
+        $totalSelected.text($checkBoxesChecked.length);
+      });
+    })();
+  </script>
+  @endauth
+
 </footer>
 
 </html>
