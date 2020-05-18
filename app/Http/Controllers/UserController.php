@@ -15,7 +15,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::select('users.*', 'roles.name as role')
+                    ->leftJoin('roles', 'roles.permission', '=', 'users.permission')
+                    ->paginate(25);
+
+        return view('pages.admin.users.index', compact('users'));
     }
 
     /**
