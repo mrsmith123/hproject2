@@ -252,7 +252,7 @@
     </div>
   </div>
 
-  <nav class="pagination " aria-label="Pagination">
+  <nav class="pagination " aria-label="Pagination" style="display:none;">
     <ol class="pagination__list flex flex-wrap gap-xxxs justify-center margin-top-xxl margin-bottom-xxl">
       <li>
         <a href="#0" class="pagination__item pagination__item--disabled" aria-label="Go to previous page">
