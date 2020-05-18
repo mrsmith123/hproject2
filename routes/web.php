@@ -55,5 +55,8 @@ Route::group(['middleware' => 'auth'], function(){
       Route::get('/admin/users/bulk-suspend', function(){
         abort(404);
       });
+
+      Route::get('/admin/users/edit/{id}', 'UserController@edit');
+      Route::post('/admin/users/update/{id}', 'UserController@update');
   });
 });
