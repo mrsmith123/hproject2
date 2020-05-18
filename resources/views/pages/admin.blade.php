@@ -56,27 +56,31 @@
 </div>
 @endif
 
+<template id="selected-id-template">
+  <input type="hidden" name="selectedIDs[]" value="@{{value}}">
+</template><!-- /#selected-id-template -->
+
     <div class="flex flex-wrap gap-sm margin-bottom-xxl margin-top-xxxs">
         <form action="{{action('UserController@bulkDelete')}}" method="POST"> @csrf
-        <template id="selected-id-template">
-          <input type="hidden" name="selectedIDs[]" value="@{{value}}">
-        </template><!-- /#selected-id-template -->
-        <div class="bulk-selected-ids"></div><!-- /.bulk-selected-ids -->
-        <button class="btn btn--subtle">
-          Delete
-          <span class="counter counter--dark margin-left-xxs table-counter-badge">
-            <span class="table-total-selected">0</span><!-- /.table-total-selected -->
-            <i class="sr-only">Notifications</i>
-          </span>
-        </button>
+          <div class="bulk-selected-ids"></div><!-- /.bulk-selected-ids -->
+          <button class="btn btn--subtle">
+            Delete
+            <span class="counter counter--dark margin-left-xxs table-counter-badge">
+              <span class="table-total-selected">0</span><!-- /.table-total-selected -->
+              <i class="sr-only">Notifications</i>
+            </span>
+          </button>
         </form>
-        <button class="btn btn--subtle">
-          Suspend
-          <span class="counter counter--dark margin-left-xxs table-counter-badge">
-            <span class="table-total-selected">0</span><!-- /.table-total-selected -->
-            <i class="sr-only">Notifications</i>
-          </span>
-        </button>
+        <form action="{{action('UserController@bulkSuspend')}}" method="POST"> @csrf
+          <div class="bulk-selected-ids"></div><!-- /.bulk-selected-ids -->
+          <button class="btn btn--subtle">
+            Suspend
+            <span class="counter counter--dark margin-left-xxs table-counter-badge">
+              <span class="table-total-selected">0</span><!-- /.table-total-selected -->
+              <i class="sr-only">Notifications</i>
+            </span>
+          </button>
+        </form>
         <div class="flex flex-column items-start">
             <label class="form-label" for="selectThis"></label>
 
@@ -257,6 +261,11 @@
           @php
             foreach($users as $key => $user){
               $user->accountStatus = $user->permission > 0 ? 'Active' : 'Inactive';
+
+              if($user->role === null){
+                $user->role = App\Role::where('permission', $user->previous_permission)->first()->name;
+              }
+
           @endphp
 
           <tr class="int-table__row">

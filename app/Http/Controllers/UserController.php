@@ -117,4 +117,54 @@ class UserController extends Controller
         return back()->with('responseMessage', $responseMessage);
 
     }
+
+    public function bulkSuspend(Request $request)
+    {
+        $selectedIDs = $request->input('selectedIDs');
+        $loggedInUser = auth()->user();
+        $responseMessage = '';
+
+        // if nothing is selected just return
+        if ($selectedIDs == null) {
+            return back();
+        }
+
+        foreach ($selectedIDs as $key => $id) {
+            $user = User::find($id);
+
+            if ($user) {
+                if ($user->id == $loggedInUser->id) {
+                    $responseMessage .= 'You cannot suspend currently logged in account.';
+                    $responseMessage .= '</br>';
+                }else{
+                    // if user was already suspended then just do nothing
+                    if ($user->permission == 0) {
+                        $responseMessage .= 'User ' . $user->name . ' account was previously suspended.';
+                        $responseMessage .= '</br>';
+                    }else{
+                        $user->previous_permission = $user->permission;
+                        $user->permission          = 0;
+
+                        $saved = $user->save();
+
+                        if ($saved) {
+                            $responseMessage .= 'User ' . $user->name . ' account has been suspended.';
+                            $responseMessage .= '</br>';
+                        }else{
+                            $responseMessage .= 'Failed to suspend user account ' . $user->name . '. Please try again.';
+                            $responseMessage .= '</br>';
+                        }
+                    }
+
+                }
+
+            }else{
+                $responseMessage .= 'User with ID: '. $id . 'is not found.';
+                $responseMessage .= '</br>';
+            }
+        }
+
+        return back()->with('responseMessage', $responseMessage);
+
+    }
 }
