@@ -39,7 +39,7 @@ class PagesController extends Controller
     public function admin(){
         $users = User::select('users.*', 'roles.name as role')
                     ->leftJoin('roles', 'roles.permission', '=', 'users.permission')
-                    ->paginate(10);
+                    ->paginate(25);
 
         return view('pages.admin', compact('users'));
     }
