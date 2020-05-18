@@ -54,6 +54,19 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
+            $user = User::where('email', $request->input('email'))->first();
+
+            // check if account is inacitve/ suspended
+            if ($user->permission < 1) {
+                $this->logout($request);
+
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'Failed to sign in. Your account is suspended.',
+                    'data'    => null
+                ]);
+            }
+
             return response()->json([
                 'status'  => 'success',
                 'message' => 'Login successful. You will be redirected in a moment.',
