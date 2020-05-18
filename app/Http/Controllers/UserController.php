@@ -123,7 +123,15 @@ class UserController extends Controller
             // get role key
             $selectedRole     = Role::where('key', $selectedRoleKey)->first();
             $permission       = $selectedRole->permission;
-            $user->permission = $permission;
+
+            // if user is currently suspended
+            if ($user->permission == 0) {
+                // then just update the previous permission
+                $user->previous_permission = $permission;
+            }else{
+                // update the current permission
+                $user->permission = $permission;
+            }
         }
 
         $saved = $user->save();

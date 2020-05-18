@@ -89,9 +89,14 @@
         <label class="form-label margin-bottom-xxxs" for="role">Select role</label>
         <div class="select">
           <select class="select__input form-control" name="role" id="role" @if(auth()->user()->id == $user->id) disabled @endif>
-            @foreach($roles as $role)
-              <option value="{{$role->key}}" @if($user->permission === $role->permission) selected @endif>{{$role->name}}</option>
-            @endforeach
+            @php
+              foreach($roles as $role){
+                $permission = ($user->permission == 0) ? $user->previous_permission : $user->permission;
+            @endphp
+              <option value="{{$role->key}}" @if($permission === $role->permission) selected @endif>{{$role->name}}</option>
+            @php
+              }
+            @endphp
           </select>
 
           <svg class="icon select__icon" aria-hidden="true" viewBox="0 0 16 16"><g stroke-width="1" stroke="currentColor"><polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="15.5,4.5 8,12 0.5,4.5 "></polyline></g></svg>
