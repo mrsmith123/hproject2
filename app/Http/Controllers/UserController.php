@@ -146,6 +146,44 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Suspend user account
+     * Set `permission` to 0
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function suspend($id)
+    {
+        $user = User::find($id);
+        $responseMessage = 'Something went wrong. Please try again.';
+
+        // if user not found
+        if (!$user) {
+            return redirect('/admin/users')->with('responseMessage', 'User not found.');
+        }
+
+        // if user trying to suspend is currently logged in admin
+        if ($user->id == auth()->user()->id) {
+            $responseMessage = 'You cannot suspend your logged in account.';
+        }else{
+            $previousPermission = $user->permission;
+            $newPermission = 0;
+
+            $user->previous_permission = $previousPermission;
+            $user->permission          = $newPermission;
+            $saved                     = $user->save();
+
+            if ($saved) {
+                $responseMessage = 'User account for '. $user->email. ' has been suspended.';
+            }else{
+                $responseMessage = 'Failed to suspend the account of '. $user->email. '. Please try again.';
+            }
+        }
+
+        return redirect('/admin/users')->with('responseMessage', $responseMessage);
+    }
+
     public function bulkDelete(Request $request)
     {
         $selectedIDs = $request->input('selectedIDs');
