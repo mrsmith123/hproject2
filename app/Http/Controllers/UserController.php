@@ -13,13 +13,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::select('users.*', 'roles.name as role')
-                    ->leftJoin('roles', 'roles.permission', '=', 'users.permission')
-                    ->paginate(25);
+        $q = $request->input('q');
 
-        return view('pages.admin.users.index', compact('users'));
+        $users = User::select('users.*', 'roles.name as role')
+                    ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
+
+        // if search query is not null
+        if ($q != null) {
+            $users = $users->where('users.name', 'LIKE', '%' . $q . '%')
+                        ->orWhere ( 'users.username', 'LIKE', '%' . $q . '%' )
+                        ->orWhere ( 'users.email', 'LIKE', '%' . $q . '%' );
+        }
+
+        $users = $users->paginate(25);
+
+        return view('pages.admin.users.index', compact('users', 'q'));
     }
 
     /**

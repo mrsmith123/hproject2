@@ -23,7 +23,7 @@
             </button>
 
             <ul class="subnav__list">
-              <li class="subnav__item"><a href="#0" class="subnav__link" aria-current=page>Users</a></li>
+              <li class="subnav__item"><a href="{{url('/admin/users')}}" class="subnav__link" aria-current=page>Users</a></li>
               <li class="subnav__item"><a href="#0" class="subnav__link">Blogs</a></li>
               <li class="subnav__item"><a href="#0" class="subnav__link">Scrape</a></li>
               <li class="subnav__item"><a href="#0" class="subnav__link">SEO</a></li>
@@ -100,10 +100,12 @@
           </div>
 
           <div class="search-input search-input--icon-right container max-width-xxxs">
-            <input class="form-control width-100%" type="search" name="searchInputX" id="searchInputX" placeholder="Search..." aria-label="Search">
-            <button class="search-input__btn">
-              <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
-            </button>
+            <form action="{{action('UserController@index')}}" method="GET">
+              <input class="form-control width-100%" type="search" name="q" id="searchInputX" placeholder="Search..." value="{{$q}}" aria-label="Search">
+              <button class="search-input__btn">
+                <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
+              </button>
+            </form>
           </div>
 
       </div>
