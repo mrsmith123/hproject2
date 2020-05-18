@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Role;
+use DB;
 
 class UserController extends Controller
 {
@@ -72,7 +74,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = DB::table('roles')->orderBy('id', 'desc')->get();
+
+        if (!$user) {
+            return redirect('/admin/users')->with('responseMessage', 'User not found.');
+        }
+
+        return view('pages.admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -84,7 +93,46 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $responseMessage = 'User has been updated.';
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect('/admin/users')->with('responseMessage', 'User not found.');
+        }
+
+        // validate data
+        $this->validate($request,[
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$id],
+            'username' => ['required', 'string', 'max:255', 'unique:users,email,'.$id],
+        ]);
+
+        // get inputs
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $username = $request->input('username');
+        $selectedRoleKey = $request->input('role');
+
+        // save updated user
+        $user->name = $name;
+        $user->email = $email;
+        $user->username = $username;
+
+        // do not update role for currently logged in admin
+        if (auth()->user()->id != $id) {
+            // get role key
+            $selectedRole     = Role::where('key', $selectedRoleKey)->first();
+            $permission       = $selectedRole->permission;
+            $user->permission = $permission;
+        }
+
+        $saved = $user->save();
+
+        if (!$saved) {
+            $responseMessage = 'Failed to save details. Please try again.';
+        }
+
+        return back()->with('responseMessage', $responseMessage);
     }
 
     /**
