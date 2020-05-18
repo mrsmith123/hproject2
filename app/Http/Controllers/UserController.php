@@ -151,7 +151,31 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $responseMessage = 'Something went wrong. Please try again.';
+
+        // if user not found
+        if (!$user) {
+            return redirect('/admin/users')->with('responseMessage', 'User not found.');
+        }
+
+        // if user trying to delete is currently logged in admin
+        if ($user->id == auth()->user()->id) {
+            $responseMessage = 'You cannot delete your logged in account.';
+        }else{
+            $email = $user->email;
+
+            $deleted = $user->delete();
+
+            if ($deleted) {
+                $responseMessage = 'User account of '. $email . ' has been deleted.';
+            }else{
+                $responseMessage = 'Failed to delete user '. $email . '. Please try again.';
+            }
+
+        }
+
+        return redirect('/admin/users')->with('responseMessage', $responseMessage);
     }
 
     /**
