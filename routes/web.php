@@ -60,5 +60,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::post('/admin/users/update/{id}', 'UserController@update');
 
       Route::get('/admin/users/suspend/{id}', 'UserController@suspend');
+
+      Route::get('/admin/users/delete/{id}', 'UserController@destroy');
   });
 });
