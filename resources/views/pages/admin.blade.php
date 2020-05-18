@@ -214,7 +214,7 @@
             <td class="int-table__cell">{{$user->email}}</td>
             <td class="int-table__cell">{{$user->username}}</td>
             <td class="int-table__cell">{{$user->role}}</td>
-            <td class="int-table__cell">01/01/2021</td>
+            <td class="int-table__cell">{{ $user->created_at->format('d/m/Y') }}</td>
             <td class="int-table__cell max-width-xxxxs">{{$user->accountStatus}}</td>
             <td class="int-table__cell">
               <button class="reset int-table__menu-btn margin-left-auto js-tab-focus" data-label="Edit row" aria-controls="menu-example">
