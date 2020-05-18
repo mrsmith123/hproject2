@@ -175,18 +175,24 @@ class UserController extends Controller
         if ($user->id == auth()->user()->id) {
             $responseMessage = 'You cannot suspend your logged in account.';
         }else{
-            $previousPermission = $user->permission;
-            $newPermission = 0;
-
-            $user->previous_permission = $previousPermission;
-            $user->permission          = $newPermission;
-            $saved                     = $user->save();
-
-            if ($saved) {
-                $responseMessage = 'User account for '. $user->email. ' has been suspended.';
+            // if user account was already suspended
+            if ($user->permission == 0) {
+                $responseMessage = 'User '. $user->email. ' was previously suspended.';
             }else{
-                $responseMessage = 'Failed to suspend the account of '. $user->email. '. Please try again.';
+                $previousPermission = $user->permission;
+                $newPermission = 0;
+
+                $user->previous_permission = $previousPermission;
+                $user->permission          = $newPermission;
+                $saved                     = $user->save();
+
+                if ($saved) {
+                    $responseMessage = 'User account for '. $user->email. ' has been suspended.';
+                }else{
+                    $responseMessage = 'Failed to suspend the account of '. $user->email. '. Please try again.';
+                }
             }
+
         }
 
         return redirect('/admin/users')->with('responseMessage', $responseMessage);
