@@ -38,8 +38,20 @@
 <div class="int-table int-table--sticky-header text-sm js-int-table container max-width-adaptive-lg margin-top-xxxl">
 
     <div class="flex flex-wrap gap-sm margin-bottom-xxl margin-top-xxxs">
-        <button class="btn btn--primary">Delete<span class="counter counter--light margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
-        <button class="btn btn--subtle">Suspend<span class="counter counter--dark margin-left-xxs">12 <i class="sr-only">Notifications</i></span></button>
+        <button class="btn btn--subtle">
+          Delete
+          <span class="counter counter--dark margin-left-xxs table-counter-badge">
+            <span class="table-total-selected">0</span><!-- /.table-total-selected -->
+            <i class="sr-only">Notifications</i>
+          </span>
+        </button>
+        <button class="btn btn--subtle">
+          Suspend
+          <span class="counter counter--dark margin-left-xxs table-counter-badge">
+            <span class="table-total-selected">0</span><!-- /.table-total-selected -->
+            <i class="sr-only">Notifications</i>
+          </span>
+        </button>
         <div class="flex flex-column items-start">
             <label class="form-label" for="selectThis"></label>
 
