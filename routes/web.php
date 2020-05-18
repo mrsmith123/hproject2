@@ -43,5 +43,9 @@ Route::get('/resetpassword',[
 Route::group(['middleware' => 'auth'], function(){
   Route::group(['middleware' => 'role:admin'], function(){
       Route::get('/admin', 'PagesController@admin');
+      Route::post('/admin/users/bulk-delete', 'UserController@bulkDelete');
+      Route::get('/admin/users/bulk-delete', function(){
+        abort(404);
+      });
   });
 });
