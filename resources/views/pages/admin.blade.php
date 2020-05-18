@@ -202,7 +202,7 @@
             <th class="int-table__cell int-table__cell--th text-left">Username</th>
             <th class="int-table__cell int-table__cell--th text-left">Role</th>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort" data-date-format="dd-mm-yyyy">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort" data-date-format="d/m/Y">
               <div class="flex items-center">
                 <span>Date</span>
 
