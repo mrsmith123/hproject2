@@ -222,6 +222,51 @@ class UserController extends Controller
         return redirect('/admin/users')->with('responseMessage', $responseMessage);
     }
 
+    /**
+     * Activate user account
+     * Set `permission` to `previous_permission`
+     * Set `previous_permission` to `permission`
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id)
+    {
+        $user = User::find($id);
+        $responseMessage = 'Something went wrong. Please try again.';
+
+        // if user not found
+        if (!$user) {
+            return redirect('/admin/users')->with('responseMessage', 'User not found.');
+        }
+
+        // if user trying to activate is currently logged in admin
+        if ($user->id == auth()->user()->id) {
+            $responseMessage = 'You cannot change the status of your account.';
+        }else{
+            // if user account was already activated
+            if ($user->permission > 0) {
+                $responseMessage = 'User '. $user->email. ' was previously activated.';
+            }else{
+                $previousPermission = $user->permission;
+                $newPermission = $user->previous_permission;
+
+                $user->previous_permission = $previousPermission;
+                $user->permission          = $newPermission;
+                $saved                     = $user->save();
+
+                if ($saved) {
+                    $responseMessage = 'User account for '. $user->email. ' has been activated.';
+                }else{
+                    $responseMessage = 'Failed to activate the account of '. $user->email. '. Please try again.';
+                }
+            }
+
+        }
+
+        return redirect('/admin/users')->with('responseMessage', $responseMessage);
+    }
+
     public function bulkDelete(Request $request)
     {
         $selectedIDs = $request->input('selectedIDs');
