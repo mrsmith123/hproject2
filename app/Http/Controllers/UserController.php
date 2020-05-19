@@ -17,10 +17,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $q = $request->input('q');
+        $q       = $request->input('q');
+        $maxRows = 25;
+        $order   = [
+            'column'      => 'id',
+            'arrangement' => 'DESC'
+        ];
 
-        $users = User::select('users.*', 'roles.name as role')
-                    ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
+        $users = User::orderBy(
+            $order['column'], $order['arrangement']
+        )
+        ->select('users.*', 'roles.name as role')
+        ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
 
         // if search query is not null
         if ($q != null) {
@@ -29,7 +37,7 @@ class UserController extends Controller
                         ->orWhere ( 'users.email', 'LIKE', '%' . $q . '%' );
         }
 
-        $users = $users->paginate(25);
+        $users = $users->paginate($maxRows);
 
         return view('pages.admin.users.index', compact('users', 'q'));
     }
