@@ -296,10 +296,24 @@
                   </a>
                 </li>
 
+                @php
+                  $accountStatus = [
+                    'slug' => 'suspend',
+                    'text' => 'Suspend',
+                  ];
+
+                  if($user->permission <= 0){
+                    $accountStatus = [
+                      'slug' => 'activate',
+                      'text' => 'Activate',
+                    ];
+                  }
+                @endphp
+
                 <li role="menuitem">
-                  <a href="{{url('admin/users/suspend/'.$user->id)}}" class="menu__content js-menu__content">
+                  <a href="{{url('admin/users/'.$accountStatus['slug'].'/'.$user->id)}}" class="menu__content js-menu__content">
                     <svg class="icon menu__icon" aria-hidden="true" viewBox="0 0 16 16"><path d="M15,4H1C0.4,4,0,4.4,0,5v10c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V5C16,4.4,15.6,4,15,4z M14,14H2V6h12V14z"></path><rect x="2" width="12" height="2"></rect></svg>
-                    <span>Suspend</span>
+                    <span>{{$accountStatus['text']}}</span>
                   </a>
                 </li>
 
