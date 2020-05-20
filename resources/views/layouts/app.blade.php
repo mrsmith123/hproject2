@@ -488,7 +488,30 @@
       // watch for change on the results limit dropdown
       $(document).on('change', '#site-table-limit', function() {
         var $this = $(this);
-        $this.closest('form').submit();
+        var $submitForm = $this.closest('form');
+        var url = $submitForm.attr('action');
+        var method = $submitForm.attr('method');
+        var dataType = 'HTML';
+        var data = $submitForm.serialize();
+
+        $('#site-table-body').html('');
+
+        $.ajax({
+          url: url,
+          method: method,
+          dataType: dataType,
+          data: data
+        })
+          .done(function(data) {
+            $('#site-table-body').html(data);
+            $('.js-int-table__select-all, .js-int-table__select-row').prop('checked', false).trigger('input');
+          })
+          .fail(function(jqXHR, textStatus) {
+            console.log('Request failed: ' + textStatus);
+            alert('Something went wrong. Please reload the page.');
+          })
+          .always(function() {});
+
       });
 
       // change sort and order whenever a table header column is toggled
