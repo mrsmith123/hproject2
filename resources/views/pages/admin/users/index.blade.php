@@ -119,10 +119,6 @@
       </div>
 
 
-
-
-
-
     <div class="int-table__inner">
       <table class="int-table__table" aria-label="Interactive table example">
         <thead class="int-table__header js-int-table__header">
@@ -313,47 +309,6 @@
     </div>
   </div>
 
-  <nav class="pagination " aria-label="Pagination" style="display:none;">
-    <ol class="pagination__list flex flex-wrap gap-xxxs justify-center margin-top-xxl margin-bottom-xxl">
-      <li>
-        <a href="#0" class="pagination__item pagination__item--disabled" aria-label="Go to previous page">
-          <svg class="icon margin-right-xxxs" aria-hidden="true" viewBox="0 0 16 16"><title>Previous</title><g stroke-width="1" stroke="currentColor"><polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.5,3.5 5,8 9.5,12.5 "></polyline></g></svg>
-          <span>Prev</span>
-        </a>
-      </li>
-
-      <li class="display@sm">
-        <a href="#0" class="pagination__item" aria-label="Go to page 1">1</a>
-      </li>
-
-      <li class="display@sm">
-        <a href="#0" class="pagination__item" aria-label="Go to page 2">2</a>
-      </li>
-
-      <li class="display@sm">
-        <a href="#0" class="pagination__item pagination__item--selected" aria-label="Current Page, page 3" aria-current="page">3</a>
-      </li>
-
-      <li class="display@sm">
-        <a href="#0" class="pagination__item" aria-label="Go to page 4">4</a>
-      </li>
-
-      <li class="display@sm" aria-hidden="true">
-        <span class="pagination__item pagination__item--ellipsis">...</span>
-      </li>
-
-      <li class="display@sm">
-        <a href="#0" class="pagination__item" aria-label="Go to page 20">20</a>
-      </li>
-
-      <li>
-        <a href="#0" class="pagination__item" aria-label="Go to next page">
-          <span>Next</span>
-          <svg class="icon margin-left-xxxs" aria-hidden="true" viewBox="0 0 16 16"><title>Next</title><g stroke-width="1" stroke="currentColor"><polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="6.5,3.5 11,8 6.5,12.5 "></polyline></g></svg>
-        </a>
-      </li>
-    </ol>
-  </nav>
-
+{{ $users->onEachSide(1)->withQueryString()->links('vendor.pagination.codyhouse') }}
 
 @endsection
