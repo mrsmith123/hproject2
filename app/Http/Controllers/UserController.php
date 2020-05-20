@@ -17,6 +17,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $bladeTemplate = $request->ajax() ? 'pages.admin.users.table-body' : 'pages.admin.users.index';
+
         $q     = $request->input('q');
 
         $limit = $request->input('limit') ? $request->input('limit') : 25;
@@ -45,7 +47,7 @@ class UserController extends Controller
 
         $availableLimit = ['25', '50', '100', '150', '200'];
 
-        return view('pages.admin.users.index',
+        return view($bladeTemplate,
             compact('users', 'q', 'limit', 'availableLimit', 'sort', 'order')
         );
     }
