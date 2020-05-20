@@ -485,11 +485,23 @@
         $totalSelected.text($checkBoxesChecked.length);
       });
 
+      // watch for change on the results limit dropdown
       $(document).on('change', '#site-table-limit', function() {
         var $this = $(this);
-        var $form = $this.closest('form');
-        console.log($form);
-        $form.submit();
+        $this.closest('form').submit();
+      });
+
+      // change sort and order whenever a table header column is toggled
+      $(document).on('click', '.js-int-table__cell--sort', function(){
+        var $this = $(this);
+        var sort = $this.data('sort')
+        var $checkedOrder = $this.find('input[type="radio"]:checked');
+        var order = (order == 'none') ? 'desc' : $checkedOrder.val();
+
+        $('input[name="sort"]').val(sort);
+        $('input[name="order"]').val(order);
+
+        console.log(sort, order);
       });
     })();
   </script>
