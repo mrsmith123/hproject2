@@ -21,11 +21,18 @@ class UserController extends Controller
 
         $limit = $request->input('limit') ? $request->input('limit') : 25;
         $sort  = $request->input('sort') ? $request->input('sort') : 'id';
-        $order = $request->input('order') ? $request->input('order') : 'DESC';
+        $order = $request->input('order') ? $request->input('order') : 'desc';
 
-        $users = User::orderBy($sort, $order)
-            ->select('users.*', 'roles.name as role')
+        // work around for status
+        $statusOrder = ($order == 'asc') ? 'desc' : 'asc';
+
+        $users = User::
+            select('users.*', 'users.permission as status', 'roles.name as role')
             ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
+
+        $users = ($sort == 'status')
+                ? $users->orderBy($sort, $statusOrder)
+                : $users->orderBy($sort, $order);
 
         // if search query is not null
         if ($q != null) {
@@ -39,7 +46,7 @@ class UserController extends Controller
         $availableLimit = ['25', '50', '100', '150', '200'];
 
         return view('pages.admin.users.index',
-            compact('users', 'q', 'limit', 'availableLimit')
+            compact('users', 'q', 'limit', 'availableLimit', 'sort', 'order')
         );
     }
 
