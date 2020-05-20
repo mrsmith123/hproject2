@@ -489,6 +489,8 @@
       $(document).on('change', '#site-table-limit', function() {
         var $this = $(this);
         var $submitForm = $this.closest('form');
+        $submitForm.submit();
+        return;
         var url = $submitForm.attr('action');
         var method = $submitForm.attr('method');
         var dataType = 'HTML';
