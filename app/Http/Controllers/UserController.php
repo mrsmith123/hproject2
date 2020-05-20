@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $bladeTemplate = $request->ajax() ? 'pages.admin.users.table-body' : 'pages.admin.users.index';
+        $bladeTemplate = $request->ajax() ? 'pages.admin.users.table-with-pagination' : 'pages.admin.users.index';
 
         $q     = $request->input('q');
 
