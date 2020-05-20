@@ -83,9 +83,10 @@
         </form>
         <div class="flex flex-column items-start">
           <form action="{{action('UserController@index')}}" method="GET">
-            @if(isset($q))
-              <input type="hidden" name="q" value="{{$q}}">
-            @endif
+            <input type="hidden" name="q" value="{{$q}}">
+            <input type="hidden" name="sort" value="{{$sort}}">
+            <input type="hidden" name="order" value="{{$order}}">
+
             <label class="form-label" for="site-table-limit"></label>
 
             <div class="select inline-block js-select" data-trigger-class="btn btn--subtle padding-sm">
@@ -104,9 +105,10 @@
 
           <div class="search-input search-input--icon-right container max-width-xxxs">
             <form action="{{action('UserController@index')}}" method="GET">
-              @if(isset($limit))
-                <input type="hidden" name="limit" value="{{$limit}}">
-              @endif
+              <input type="hidden" name="limit" value="{{$limit}}">
+              <input type="hidden" name="sort" value="{{$sort}}">
+              <input type="hidden" name="order" value="{{$order}}">
+
               <input class="form-control width-100%" type="search" name="q" id="searchInputX" placeholder="Search..." value="{{$q}}" aria-label="Search">
               <button class="search-input__btn">
                 <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
@@ -132,7 +134,7 @@
               </div>
             </td>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'id') int-table__cell--{{$order}} @endif" data-sort="id">
               <div class="flex items-center">
                 <span>ID</span>
 
@@ -141,23 +143,31 @@
 
               <ul class="sr-only js-int-table__sort-list">
                 <li>
-                  <input type="radio" name="sortingId" id="sortingIdNone" value="none" checked>
+                  <input type="radio" name="sortingId" id="sortingIdNone" value="none">
                   <label for="sortingIdNone">No sorting</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingId" id="sortingIdAsc" value="asc">
+                  <input type="radio" name="sortingId" id="sortingIdAsc" value="asc"
+                    @if($sort == "id" && $order == 'asc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingIdAsc">Sort in ascending order</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingId" id="sortingIdDes" value="desc">
+                  <input type="radio" name="sortingId" id="sortingIdDes" value="desc"
+                    @if($sort == "id" && $order == 'desc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingIdDes">Sort in descending order</label>
                 </li>
               </ul>
             </th>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'name') int-table__cell--{{$order}} @endif" data-sort="name">
               <div class="flex items-center">
                 <span>Name</span>
 
@@ -166,23 +176,31 @@
 
               <ul class="sr-only js-int-table__sort-list">
                 <li>
-                  <input type="radio" name="sortingName" id="sortingNameNone" value="none" checked>
+                  <input type="radio" name="sortingName" id="sortingNameNone" value="none">
                   <label for="sortingNameNone">No sorting</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingName" id="sortingNameAsc" value="asc">
+                  <input type="radio" name="sortingName" id="sortingNameAsc" value="asc"
+                    @if($sort == "name" && $order == 'asc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingNameAsc">Sort in ascending order</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingName" id="sortingNameDes" value="desc">
+                  <input type="radio" name="sortingName" id="sortingNameDes" value="desc"
+                    @if($sort == "name" && $order == 'desc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingNameDes">Sort in descending order</label>
                 </li>
               </ul>
             </th>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'email') int-table__cell--{{$order}} @endif" data-sort="email">
               <div class="flex items-center">
                 <span>Email</span>
 
@@ -191,17 +209,25 @@
 
               <ul class="sr-only js-int-table__sort-list">
                 <li>
-                  <input type="radio" name="sortingEmail" id="sortingEmailNone" value="none" checked>
+                  <input type="radio" name="sortingEmail" id="sortingEmailNone" value="none">
                   <label for="sortingEmailNone">No sorting</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingEmail" id="sortingEmailAsc" value="asc">
+                  <input type="radio" name="sortingEmail" id="sortingEmailAsc" value="asc"
+                    @if($sort == "email" && $order == 'asc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingEmailAsc">Sort in ascending order</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingEmail" id="sortingEmailDes" value="desc">
+                  <input type="radio" name="sortingEmail" id="sortingEmailDes" value="desc"
+                    @if($sort == "email" && $order == 'desc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingEmailDes">Sort in descending order</label>
                 </li>
               </ul>
@@ -210,7 +236,7 @@
             <th class="int-table__cell int-table__cell--th text-left">Username</th>
             <th class="int-table__cell int-table__cell--th text-left">Role</th>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort" data-date-format="d/m/Y">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'created_at') int-table__cell--{{$order}} @endif" data-sort="created_at" data-date-format="d/m/Y">
               <div class="flex items-center">
                 <span>Date</span>
 
@@ -219,23 +245,31 @@
 
               <ul class="sr-only js-int-table__sort-list">
                 <li>
-                  <input type="radio" name="sortingDate" id="sortingDateNone" value="none" checked>
+                  <input type="radio" name="sortingDate" id="sortingDateNone" value="none">
                   <label for="sortingDateNone">No sorting</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingDate" id="sortingDateAsc" value="asc">
+                  <input type="radio" name="sortingDate" id="sortingDateAsc" value="asc"
+                    @if($sort == "created_at" && $order == 'asc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingDateAsc">Sort in ascending order</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingDate" id="sortingDateDes" value="desc">
+                  <input type="radio" name="sortingDate" id="sortingDateDes" value="desc"
+                    @if($sort == "created_at" && $order == 'desc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingDateDes">Sort in descending order</label>
                 </li>
               </ul>
             </th>
 
-            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort">
+            <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'status') int-table__cell--{{$order}} @endif" data-sort="status">
               <div class="flex items-center">
                 <span>Status</span>
 
@@ -244,17 +278,25 @@
 
               <ul class="sr-only js-int-table__sort-list">
                 <li>
-                  <input type="radio" name="sortingStatus" id="sortingStatusNone" value="none" checked>
+                  <input type="radio" name="sortingStatus" id="sortingStatusNone" value="none">
                   <label for="sortingStatusNone">No sorting</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingStatus" id="sortingStatusAsc" value="asc">
+                  <input type="radio" name="sortingStatus" id="sortingStatusAsc" value="asc"
+                    @if($sort == "status" && $order == 'asc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingStatusAsc">Sort in ascending order</label>
                 </li>
 
                 <li>
-                  <input type="radio" name="sortingStatus" id="sortingStatusDes" value="desc">
+                  <input type="radio" name="sortingStatus" id="sortingStatusDes" value="desc"
+                    @if($sort == "status" && $order == 'desc')
+                      checked
+                    @endif
+                  >
                   <label for="sortingStatusDes">Sort in descending order</label>
                 </li>
               </ul>
@@ -268,8 +310,6 @@
 
           @php
             foreach($users as $key => $user){
-              $user->accountStatus = $user->permission > 0 ? 'Active' : 'Inactive';
-
               if($user->role === null){
                 $user->role = App\Role::where('permission', $user->previous_permission)->first()->name;
               }
@@ -289,7 +329,7 @@
             <td class="int-table__cell">{{$user->username}}</td>
             <td class="int-table__cell">{{$user->role}}</td>
             <td class="int-table__cell">{{ $user->created_at->format('d/m/Y') }}</td>
-            <td class="int-table__cell max-width-xxxxs">{{$user->accountStatus}}</td>
+            <td class="int-table__cell max-width-xxxxs">{{$user->status}}</td>
             <td class="int-table__cell">
               <button class="reset int-table__menu-btn margin-left-auto js-tab-focus" data-label="Edit row" aria-controls="menu-table-row-{{$user->id}}">
                 <svg class="icon" viewBox="0 0 16 16"><circle cx="8" cy="7.5" r="1.5" /><circle cx="1.5" cy="7.5" r="1.5" /><circle cx="14.5" cy="7.5" r="1.5" /></svg>
