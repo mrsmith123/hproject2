@@ -489,14 +489,12 @@
       $(document).on('change', '#site-table-limit', function() {
         var $this = $(this);
         var $submitForm = $this.closest('form');
-        $submitForm.submit();
-        return;
+        /* $submitForm.submit();
+        return; */
         var url = $submitForm.attr('action');
         var method = $submitForm.attr('method');
         var dataType = 'HTML';
         var data = $submitForm.serialize();
-
-        $('#site-table-body').html('');
 
         $.ajax({
           url: url,
@@ -505,8 +503,7 @@
           data: data
         })
           .done(function(data) {
-            $('#site-table-body').html(data);
-            $('.js-int-table__select-all, .js-int-table__select-row').prop('checked', false).trigger('input');
+            $('#site-table-with-pagination-container').html(data);
           })
           .fail(function(jqXHR, textStatus) {
             console.log('Request failed: ' + textStatus);
@@ -514,6 +511,15 @@
           })
           .always(function() {});
 
+      });
+
+      // when pagination links are clicked, only load the table
+      $(document).on('click', '.site-table-pagination-ajax a', function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var url = $this.attr('href');
+
+        $('#site-table-with-pagination-container').load(url);
       });
 
       // change sort and order whenever a table header column is toggled
