@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the user's `permission` value and set it either Active/ Inactive as `status`.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getStatusAttribute()
+    {
+        return ($this->permission < 1) ? 'Inactive' : 'Active';
+    }
 }
