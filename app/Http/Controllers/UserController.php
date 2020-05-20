@@ -17,29 +17,30 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $q       = $request->input('q');
-        $maxRows = 25;
-        $order   = [
-            'column'      => 'id',
-            'arrangement' => 'DESC'
-        ];
+        $q     = $request->input('q');
 
-        $users = User::orderBy(
-            $order['column'], $order['arrangement']
-        )
-        ->select('users.*', 'roles.name as role')
-        ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
+        $limit = $request->input('limit') ? $request->input('limit') : 25;
+        $sort  = $request->input('sort') ? $request->input('sort') : 'id';
+        $order = $request->input('order') ? $request->input('order') : 'DESC';
+
+        $users = User::orderBy($sort, $order)
+            ->select('users.*', 'roles.name as role')
+            ->leftJoin('roles', 'roles.permission', '=', 'users.permission');
 
         // if search query is not null
         if ($q != null) {
             $users = $users->where('users.name', 'LIKE', '%' . $q . '%')
-                        ->orWhere ( 'users.username', 'LIKE', '%' . $q . '%' )
-                        ->orWhere ( 'users.email', 'LIKE', '%' . $q . '%' );
+                ->orWhere ( 'users.username', 'LIKE', '%' . $q . '%' )
+                ->orWhere ( 'users.email', 'LIKE', '%' . $q . '%' );
         }
 
-        $users = $users->paginate($maxRows);
+        $users = $users->paginate($limit);
 
-        return view('pages.admin.users.index', compact('users', 'q'));
+        $availableLimit = ['25', '50', '100', '150', '200'];
+
+        return view('pages.admin.users.index',
+            compact('users', 'q', 'limit', 'availableLimit')
+        );
     }
 
     /**

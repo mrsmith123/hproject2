@@ -484,6 +484,13 @@
 
         $totalSelected.text($checkBoxesChecked.length);
       });
+
+      $(document).on('change', '#site-table-limit', function() {
+        var $this = $(this);
+        var $form = $this.closest('form');
+        console.log($form);
+        $form.submit();
+      });
     })();
   </script>
   @endauth

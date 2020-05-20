@@ -82,25 +82,31 @@
           </button>
         </form>
         <div class="flex flex-column items-start">
-            <label class="form-label" for="selectThis"></label>
+          <form action="{{action('UserController@index')}}" method="GET">
+            @if(isset($q))
+              <input type="hidden" name="q" value="{{$q}}">
+            @endif
+            <label class="form-label" for="site-table-limit"></label>
 
             <div class="select inline-block js-select" data-trigger-class="btn btn--subtle padding-sm">
-              <select name="selectThis" id="selectThis">
+              <select name="limit" id="site-table-limit">
                 <optgroup label="Amount to show">
-                  <option value="0" selected>Show 25</option>
-                  <option value="1">Show 50</option>
-                  <option value="2">Show 100</option>
-                  <option value="2">Show 150</option>
-                  <option value="2">Show 200</option>
+                  @foreach($availableLimit as $amount)
+                    <option value="{{$amount}}" @if($limit == $amount) selected @endif>Show {{$amount}}</option>
+                  @endforeach
                 </optgroup>
               </select>
 
               <svg class="icon icon--xs margin-left-xxxs" aria-hidden="true" viewBox="0 0 16 16"><polygon points="3,5 8,11 13,5 "></polygon></svg>
-            </div>
-          </div>
+            </div><!-- /.js-select -->
+          </form>
+        </div>
 
           <div class="search-input search-input--icon-right container max-width-xxxs">
             <form action="{{action('UserController@index')}}" method="GET">
+              @if(isset($limit))
+                <input type="hidden" name="limit" value="{{$limit}}">
+              @endif
               <input class="form-control width-100%" type="search" name="q" id="searchInputX" placeholder="Search..." value="{{$q}}" aria-label="Search">
               <button class="search-input__btn">
                 <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
@@ -258,7 +264,7 @@
           </tr>
         </thead>
 
-        <tbody class="int-table__body js-int-table__body">
+        <tbody class="int-table__body js-int-table__body" id="site-table-body">
 
           @php
             foreach($users as $key => $user){
