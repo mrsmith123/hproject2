@@ -188,7 +188,39 @@
           </th>
 
           <th class="int-table__cell int-table__cell--th text-left">Username</th>
-          <th class="int-table__cell int-table__cell--th text-left">Role</th>
+
+          <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'role') int-table__cell--{{$order}} @endif" data-sort="role">
+            <div class="flex items-center">
+              <span>Role</span>
+
+              <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12"><polygon class="arrow-up" points="6 0 10 5 2 5 6 0"/><polygon class="arrow-down" points="6 12 2 7 10 7 6 12"/></svg>
+            </div>
+
+            <ul class="sr-only js-int-table__sort-list">
+              <li>
+                <input type="radio" name="sortingRole" id="sortingRoleNone" value="none">
+                <label for="sortingRoleNone">No sorting</label>
+              </li>
+
+              <li>
+                <input type="radio" name="sortingRole" id="sortingRoleAsc" value="asc"
+                  @if($sort == "role" && $order == 'asc')
+                    checked
+                  @endif
+                >
+                <label for="sortingRoleAsc">Sort in ascending order</label>
+              </li>
+
+              <li>
+                <input type="radio" name="sortingRole" id="sortingRoleDes" value="desc"
+                  @if($sort == "role" && $order == 'desc')
+                    checked
+                  @endif
+                >
+                <label for="sortingRoleDes">Sort in descending order</label>
+              </li>
+            </ul>
+          </th>
 
           <th class="int-table__cell int-table__cell--th int-table__cell--sort  js-int-table__cell--sort @if($sort == 'created_at') int-table__cell--{{$order}} @endif" data-sort="created_at" data-date-format="d/m/Y">
             <div class="flex items-center">
