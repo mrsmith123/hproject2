@@ -36,6 +36,10 @@ class PagesController extends Controller
         return view('pages.profile');
     }
 
+    public function blogadmin(){
+        return view('pages.blogadmin');
+    }
+
     public function admin(){
         return redirect('/admin/users');
     }

@@ -875,6 +875,63 @@ function initAlertEvent(element) {
       }
     }
   }());
+// File#: _1_file-upload
+// Usage: codyhouse.co/license
+(function() {
+    var InputFile = function(element) {
+      this.element = element;
+      this.input = this.element.getElementsByClassName('file-upload__input')[0];
+      this.label = this.element.getElementsByClassName('file-upload__label')[0];
+      this.multipleUpload = this.input.hasAttribute('multiple'); // allow for multiple files selection
+      
+      // this is the label text element -> when user selects a file, it will be changed from the default value to the name of the file 
+      this.labelText = this.element.getElementsByClassName('file-upload__text')[0];
+      this.initialLabel = this.labelText.textContent;
+  
+      initInputFileEvents(this);
+    }; 
+  
+    function initInputFileEvents(inputFile) {
+      // make label focusable
+      inputFile.label.setAttribute('tabindex', '0');
+      inputFile.input.setAttribute('tabindex', '-1');
+  
+      // move focus from input to label -> this is triggered when a file is selected or the file picker modal is closed
+      inputFile.input.addEventListener('focusin', function(event){ 
+        inputFile.label.focus();
+      });
+  
+      // press 'Enter' key on label element -> trigger file selection
+      inputFile.label.addEventListener('keydown', function(event) {
+        if( event.keyCode && event.keyCode == 13 || event.key && event.key.toLowerCase() == 'enter') {inputFile.input.click();}
+      });
+  
+      // file has been selected -> update label text
+      inputFile.input.addEventListener('change', function(event){ 
+        updateInputLabelText(inputFile);
+      });
+    };
+  
+    function updateInputLabelText(inputFile) {
+      var label = '';
+      if(inputFile.input.files && inputFile.input.files.length < 1) { 
+        label = inputFile.initialLabel; // no selection -> revert to initial label
+      } else if(inputFile.multipleUpload && inputFile.input.files && inputFile.input.files.length > 1) {
+        label = inputFile.input.files.length+ ' files'; // multiple selection -> show number of files
+      } else {
+        label = inputFile.input.value.split('\\').pop(); // single file selection -> show name of the file
+      }
+      inputFile.labelText.textContent = label;
+    };
+  
+    //initialize the InputFile objects
+    var inputFiles = document.getElementsByClassName('file-upload');
+    if( inputFiles.length > 0 ) {
+      for( var i = 0; i < inputFiles.length; i++) {
+        (function(i){new InputFile(inputFiles[i]);})(i);
+      }
+    }
+  }());
 // File#: _1_menu
 // Usage: codyhouse.co/license
 (function() {
@@ -1030,6 +1087,211 @@ function initAlertEvent(element) {
       });
     }
   }());
+// File#: _1_modal-window
+// Usage: codyhouse.co/license
+(function() {
+    var Modal = function(element) {
+      this.element = element;
+      this.triggers = document.querySelectorAll('[aria-controls="'+this.element.getAttribute('id')+'"]');
+      this.firstFocusable = null;
+      this.lastFocusable = null;
+      this.moveFocusEl = null; // focus will be moved to this element when modal is open
+      this.modalFocus = this.element.getAttribute('data-modal-first-focus') ? this.element.querySelector(this.element.getAttribute('data-modal-first-focus')) : null;
+      this.selectedTrigger = null;
+      this.showClass = "modal--is-visible";
+      this.initModal();
+    };
+  
+    Modal.prototype.initModal = function() {
+      var self = this;
+      //open modal when clicking on trigger buttons
+      if ( this.triggers ) {
+        for(var i = 0; i < this.triggers.length; i++) {
+          this.triggers[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            if(Util.hasClass(self.element, self.showClass)) {
+              self.closeModal();
+              return;
+            }
+            self.selectedTrigger = event.target;
+            self.showModal();
+            self.initModalEvents();
+          });
+        }
+      }
+  
+      // listen to the openModal event -> open modal without a trigger button
+      this.element.addEventListener('openModal', function(event){
+        if(event.detail) self.selectedTrigger = event.detail;
+        self.showModal();
+        self.initModalEvents();
+      });
+  
+      // listen to the closeModal event -> close modal without a trigger button
+      this.element.addEventListener('closeModal', function(event){
+        if(event.detail) self.selectedTrigger = event.detail;
+        self.closeModal();
+      });
+  
+      // if modal is open by default -> initialise modal events
+      if(Util.hasClass(this.element, this.showClass)) this.initModalEvents();
+    };
+  
+    Modal.prototype.showModal = function() {
+      var self = this;
+      Util.addClass(this.element, this.showClass);
+      this.getFocusableElements();
+      this.moveFocusEl.focus();
+      // wait for the end of transitions before moving focus
+      this.element.addEventListener("transitionend", function cb(event) {
+        self.moveFocusEl.focus();
+        self.element.removeEventListener("transitionend", cb);
+      });
+      this.emitModalEvents('modalIsOpen');
+    };
+  
+    Modal.prototype.closeModal = function() {
+      if(!Util.hasClass(this.element, this.showClass)) return;
+      Util.removeClass(this.element, this.showClass);
+      this.firstFocusable = null;
+      this.lastFocusable = null;
+      this.moveFocusEl = null;
+      if(this.selectedTrigger) this.selectedTrigger.focus();
+      //remove listeners
+      this.cancelModalEvents();
+      this.emitModalEvents('modalIsClose');
+    };
+  
+    Modal.prototype.initModalEvents = function() {
+      //add event listeners
+      this.element.addEventListener('keydown', this);
+      this.element.addEventListener('click', this);
+    };
+  
+    Modal.prototype.cancelModalEvents = function() {
+      //remove event listeners
+      this.element.removeEventListener('keydown', this);
+      this.element.removeEventListener('click', this);
+    };
+  
+    Modal.prototype.handleEvent = function (event) {
+      switch(event.type) {
+        case 'click': {
+          this.initClick(event);
+        }
+        case 'keydown': {
+          this.initKeyDown(event);
+        }
+      }
+    };
+  
+    Modal.prototype.initKeyDown = function(event) {
+      if( event.keyCode && event.keyCode == 9 || event.key && event.key == 'Tab' ) {
+        //trap focus inside modal
+        this.trapFocus(event);
+      } else if( (event.keyCode && event.keyCode == 13 || event.key && event.key == 'Enter') && event.target.closest('.js-modal__close')) {
+        event.preventDefault();
+        this.closeModal(); // close modal when pressing Enter on close button
+      }	
+    };
+  
+    Modal.prototype.initClick = function(event) {
+      //close modal when clicking on close button or modal bg layer 
+      if( !event.target.closest('.js-modal__close') && !Util.hasClass(event.target, 'js-modal') ) return;
+      event.preventDefault();
+      this.closeModal();
+    };
+  
+    Modal.prototype.trapFocus = function(event) {
+      if( this.firstFocusable == document.activeElement && event.shiftKey) {
+        //on Shift+Tab -> focus last focusable element when focus moves out of modal
+        event.preventDefault();
+        this.lastFocusable.focus();
+      }
+      if( this.lastFocusable == document.activeElement && !event.shiftKey) {
+        //on Tab -> focus first focusable element when focus moves out of modal
+        event.preventDefault();
+        this.firstFocusable.focus();
+      }
+    }
+  
+    Modal.prototype.getFocusableElements = function() {
+      //get all focusable elements inside the modal
+      var allFocusable = this.element.querySelectorAll(focusableElString);
+      this.getFirstVisible(allFocusable);
+      this.getLastVisible(allFocusable);
+      this.getFirstFocusable();
+    };
+  
+    Modal.prototype.getFirstVisible = function(elements) {
+      //get first visible focusable element inside the modal
+      for(var i = 0; i < elements.length; i++) {
+        if( isVisible(elements[i]) ) {
+          this.firstFocusable = elements[i];
+          break;
+        }
+      }
+    };
+  
+    Modal.prototype.getLastVisible = function(elements) {
+      //get last visible focusable element inside the modal
+      for(var i = elements.length - 1; i >= 0; i--) {
+        if( isVisible(elements[i]) ) {
+          this.lastFocusable = elements[i];
+          break;
+        }
+      }
+    };
+  
+    Modal.prototype.getFirstFocusable = function() {
+      if(!this.modalFocus || !Element.prototype.matches) {
+        this.moveFocusEl = this.firstFocusable;
+        return;
+      }
+      var containerIsFocusable = this.modalFocus.matches(focusableElString);
+      if(containerIsFocusable) {
+        this.moveFocusEl = this.modalFocus;
+      } else {
+        this.moveFocusEl = false;
+        var elements = this.modalFocus.querySelectorAll(focusableElString);
+        for(var i = 0; i < elements.length; i++) {
+          if( isVisible(elements[i]) ) {
+            this.moveFocusEl = elements[i];
+            break;
+          }
+        }
+        if(!this.moveFocusEl) this.moveFocusEl = this.firstFocusable;
+      }
+    };
+  
+    Modal.prototype.emitModalEvents = function(eventName) {
+      var event = new CustomEvent(eventName, {detail: this.selectedTrigger});
+      this.element.dispatchEvent(event);
+    };
+  
+    function isVisible(element) {
+      return element.offsetWidth || element.offsetHeight || element.getClientRects().length;
+    };
+  
+    //initialize the Modal objects
+    var modals = document.getElementsByClassName('js-modal');
+    // generic focusable elements string selector
+    var focusableElString = '[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable], audio[controls], video[controls], summary';
+    if( modals.length > 0 ) {
+      var modalArrays = [];
+      for( var i = 0; i < modals.length; i++) {
+        (function(i){modalArrays.push(new Modal(modals[i]));})(i);
+      }
+  
+      window.addEventListener('keydown', function(event){ //close modal window on esc
+        if(event.keyCode && event.keyCode == 27 || event.key && event.key.toLowerCase() == 'escape') {
+          for( var i = 0; i < modalArrays.length; i++) {
+            (function(i){modalArrays[i].closeModal();})(i);
+          };
+        }
+      });
+    }
+  }());
 // File#: _1_pre-header
 // Usage: codyhouse.co/license
 (function() {
@@ -1047,6 +1309,211 @@ function initAlertEvent(element) {
             Util.addClass(element, 'pre-header--is-hidden');
           });
         }
+      }
+    }
+  }());
+// File#: _1_responsive-sidebar
+// Usage: codyhouse.co/license
+(function() {
+    var Sidebar = function(element) {
+      this.element = element;
+      this.triggers = document.querySelectorAll('[aria-controls="'+this.element.getAttribute('id')+'"]');
+      this.firstFocusable = null;
+      this.lastFocusable = null;
+      this.selectedTrigger = null;
+      this.showClass = "sidebar--is-visible";
+      this.staticClass = "sidebar--static";
+      this.customStaticClass = "";
+      this.readyClass = "sidebar--loaded";
+      this.layout = false; // this will be static or mobile
+      getCustomStaticClass(this); // custom classes for static version
+      initSidebar(this);
+    };
+  
+    function getCustomStaticClass(element) {
+      var customClasses = element.element.getAttribute('data-static-class');
+      if(customClasses) element.customStaticClass = ' '+customClasses;
+    };
+    
+    function initSidebar(sidebar) {
+      initSidebarResize(sidebar); // handle changes in layout -> mobile to static and viceversa
+      
+      if ( sidebar.triggers ) { // open sidebar when clicking on trigger buttons - mobile layout only
+        for(var i = 0; i < sidebar.triggers.length; i++) {
+          sidebar.triggers[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            if(Util.hasClass(sidebar.element, sidebar.showClass)) {
+              sidebar.selectedTrigger = event.target;
+              closeSidebar(sidebar);
+              return;
+            }
+            sidebar.selectedTrigger = event.target;
+            showSidebar(sidebar);
+            initSidebarEvents(sidebar);
+          });
+        }
+      }
+    };
+  
+    function showSidebar(sidebar) { // mobile layout only
+      Util.addClass(sidebar.element, sidebar.showClass);
+      getFocusableElements(sidebar);
+      Util.moveFocus(sidebar.element);
+    };
+  
+    function closeSidebar(sidebar) { // mobile layout only
+      Util.removeClass(sidebar.element, sidebar.showClass);
+      sidebar.firstFocusable = null;
+      sidebar.lastFocusable = null;
+      if(sidebar.selectedTrigger) sidebar.selectedTrigger.focus();
+      sidebar.element.removeAttribute('tabindex');
+      //remove listeners
+      cancelSidebarEvents(sidebar);
+    };
+  
+    function initSidebarEvents(sidebar) { // mobile layout only
+      //add event listeners
+      sidebar.element.addEventListener('keydown', handleEvent.bind(sidebar));
+      sidebar.element.addEventListener('click', handleEvent.bind(sidebar));
+    };
+  
+    function cancelSidebarEvents(sidebar) { // mobile layout only
+      //remove event listeners
+      sidebar.element.removeEventListener('keydown', handleEvent.bind(sidebar));
+      sidebar.element.removeEventListener('click', handleEvent.bind(sidebar));
+    };
+  
+    function handleEvent(event) { // mobile layout only
+      switch(event.type) {
+        case 'click': {
+          initClick(this, event);
+        }
+        case 'keydown': {
+          initKeyDown(this, event);
+        }
+      }
+    };
+  
+    function initKeyDown(sidebar, event) { // mobile layout only
+      if( event.keyCode && event.keyCode == 27 || event.key && event.key == 'Escape' ) {
+        //close sidebar window on esc
+        closeSidebar(sidebar);
+      } else if( event.keyCode && event.keyCode == 9 || event.key && event.key == 'Tab' ) {
+        //trap focus inside sidebar
+        trapFocus(sidebar, event);
+      }
+    };
+  
+    function initClick(sidebar, event) { // mobile layout only
+      //close sidebar when clicking on close button or sidebar bg layer 
+      if( !event.target.closest('.js-sidebar__close-btn') && !Util.hasClass(event.target, 'js-sidebar') ) return;
+      event.preventDefault();
+      closeSidebar(sidebar);
+    };
+  
+    function trapFocus(sidebar, event) { // mobile layout only
+      if( sidebar.firstFocusable == document.activeElement && event.shiftKey) {
+        //on Shift+Tab -> focus last focusable element when focus moves out of sidebar
+        event.preventDefault();
+        sidebar.lastFocusable.focus();
+      }
+      if( sidebar.lastFocusable == document.activeElement && !event.shiftKey) {
+        //on Tab -> focus first focusable element when focus moves out of sidebar
+        event.preventDefault();
+        sidebar.firstFocusable.focus();
+      }
+    };
+  
+    function initSidebarResize(sidebar) {
+      // custom event emitted when window is resized - detect only if the sidebar--static@{breakpoint} class was added
+      var beforeContent = getComputedStyle(sidebar.element, ':before').getPropertyValue('content');
+      if(beforeContent && beforeContent !='' && beforeContent !='none') {
+        checkSidebarLayour(sidebar);
+  
+        sidebar.element.addEventListener('update-sidebar', function(event){
+          checkSidebarLayour(sidebar);
+        });
+      } 
+      Util.addClass(sidebar.element, sidebar.readyClass);
+    };
+  
+    function checkSidebarLayour(sidebar) {
+      var layout = getComputedStyle(sidebar.element, ':before').getPropertyValue('content').replace(/\'|"/g, '');
+      if(layout == sidebar.layout) return;
+      sidebar.layout = layout;
+      if(layout != 'static') Util.addClass(sidebar.element, 'is-hidden');
+      Util.toggleClass(sidebar.element, sidebar.staticClass + sidebar.customStaticClass, layout == 'static');
+      if(layout != 'static') setTimeout(function(){Util.removeClass(sidebar.element, 'is-hidden')});
+      // reset element role 
+      (layout == 'static') ? sidebar.element.removeAttribute('role', 'alertdialog') :  sidebar.element.setAttribute('role', 'alertdialog');
+      // reset mobile behaviour
+      if(layout == 'static' && Util.hasClass(sidebar.element, sidebar.showClass)) closeSidebar(sidebar);
+    };
+  
+    function getFocusableElements(sidebar) {
+      //get all focusable elements inside the drawer
+      var allFocusable = sidebar.element.querySelectorAll('[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable], audio[controls], video[controls], summary');
+      getFirstVisible(sidebar, allFocusable);
+      getLastVisible(sidebar, allFocusable);
+    };
+  
+    function getFirstVisible(sidebar, elements) {
+      //get first visible focusable element inside the sidebar
+      for(var i = 0; i < elements.length; i++) {
+        if( elements[i].offsetWidth || elements[i].offsetHeight || elements[i].getClientRects().length ) {
+          sidebar.firstFocusable = elements[i];
+          return true;
+        }
+      }
+    };
+  
+    function getLastVisible(sidebar, elements) {
+      //get last visible focusable element inside the sidebar
+      for(var i = elements.length - 1; i >= 0; i--) {
+        if( elements[i].offsetWidth || elements[i].offsetHeight || elements[i].getClientRects().length ) {
+          sidebar.lastFocusable = elements[i];
+          return true;
+        }
+      }
+    };
+  
+    //initialize the Sidebar objects
+    var sidebar = document.getElementsByClassName('js-sidebar');
+    if( sidebar.length > 0 ) {
+      for( var i = 0; i < sidebar.length; i++) {
+        (function(i){new Sidebar(sidebar[i]);})(i);
+      }
+      // switch from mobile to static layout
+      var customEvent = new CustomEvent('update-sidebar');
+      window.addEventListener('resize', function(event){
+        (!window.requestAnimationFrame) ? setTimeout(function(){resetLayout();}, 250) : window.requestAnimationFrame(resetLayout);
+      });
+  
+      function resetLayout() {
+        for( var i = 0; i < sidebar.length; i++) {
+          (function(i){sidebar[i].dispatchEvent(customEvent)})(i);
+        };
+      };
+    }
+  }());
+// File#: _1_side-navigation
+// Usage: codyhouse.co/license
+(function() {
+    function initSideNav(nav) {
+      nav.addEventListener('click', function(event){
+        var btn = event.target.closest('.js-sidenav__sublist-control');
+        if(!btn) return;
+        var listItem = btn.parentElement,
+          bool = Util.hasClass(listItem, 'sidenav__item--expanded');
+        btn.setAttribute('aria-expanded', !bool);
+        Util.toggleClass(listItem, 'sidenav__item--expanded', !bool);
+      });
+    };
+  
+    var sideNavs = document.getElementsByClassName('js-sidenav');
+    if( sideNavs.length > 0 ) {
+      for( var i = 0; i < sideNavs.length; i++) {
+        (function(i){initSideNav(sideNavs[i]);})(i);
       }
     }
   }());
@@ -2187,6 +2654,158 @@ function initAlertEvent(element) {
     if( intTable.length > 0 ) {
       for( var i = 0; i < intTable.length; i++) {
         (function(i){new IntTable(intTable[i]);})(i);
+      }
+    }
+  }());
+// File#: _2_menu-bar
+// Usage: codyhouse.co/license
+(function() {
+    var MenuBar = function(element) {
+      this.element = element;
+      this.items = Util.getChildrenByClassName(this.element, 'menu-bar__item');
+      this.mobHideItems = this.element.getElementsByClassName('menu-bar__item--hide');
+      this.moreItemsTrigger = this.element.getElementsByClassName('js-menu-bar__trigger');
+      initMenuBar(this);
+    };
+  
+    function initMenuBar(menu) {
+      setMenuTabIndex(menu); // set correct tabindexes for menu item
+      initMenuBarMarkup(menu); // create additional markup
+      checkMenuLayout(menu); // set menu layout
+      Util.addClass(menu.element, 'menu-bar--loaded'); // reveal menu
+  
+      // custom event emitted when window is resized
+      menu.element.addEventListener('update-menu-bar', function(event){
+        checkMenuLayout(menu);
+        if(menu.menuInstance) menu.menuInstance.toggleMenu(false, false); // close dropdown
+      });
+  
+      // keyboard events 
+      // open dropdown when pressing Enter on trigger element
+      if(menu.moreItemsTrigger.length > 0) {
+        menu.moreItemsTrigger[0].addEventListener('keydown', function(event) {
+          if( (event.keyCode && event.keyCode == 13) || (event.key && event.key.toLowerCase() == 'enter') ) {
+            if(!menu.menuInstance) return;
+            menu.menuInstance.selectedTrigger = menu.moreItemsTrigger[0];
+            menu.menuInstance.toggleMenu(!Util.hasClass(menu.subMenu, 'menu--is-visible'), true);
+          }
+        });
+  
+        // close dropdown on esc
+        menu.subMenu.addEventListener('keydown', function(event) {
+          if((event.keyCode && event.keyCode == 27) || (event.key && event.key.toLowerCase() == 'escape')) { // close submenu on esc
+            if(menu.menuInstance) menu.menuInstance.toggleMenu(false, true);
+          }
+        });
+      }
+      
+      // navigate menu items using left/right arrows
+      menu.element.addEventListener('keydown', function(event) {
+        if( (event.keyCode && event.keyCode == 39) || (event.key && event.key.toLowerCase() == 'arrowright') ) {
+          navigateItems(menu.items, event, 'next');
+        } else if( (event.keyCode && event.keyCode == 37) || (event.key && event.key.toLowerCase() == 'arrowleft') ) {
+          navigateItems(menu.items, event, 'prev');
+        }
+      });
+    };
+  
+    function setMenuTabIndex(menu) { // set tabindexes for the menu items to allow keyboard navigation
+      var nextItem = false;
+      for(var i = 0; i < menu.items.length; i++ ) {
+        if(i == 0 || nextItem) menu.items[i].setAttribute('tabindex', '0');
+        else menu.items[i].setAttribute('tabindex', '-1');
+        if(i == 0 && menu.moreItemsTrigger.length > 0) nextItem = true;
+        else nextItem = false;
+      }
+    };
+  
+    function initMenuBarMarkup(menu) {
+      if(menu.mobHideItems.length == 0 ) { // no items to hide on mobile - remove trigger
+        if(menu.moreItemsTrigger.length > 0) menu.element.removeChild(menu.moreItemsTrigger[0]);
+        return;
+      }
+  
+      if(menu.moreItemsTrigger.length == 0) return;
+  
+      // create the markup for the Menu element
+      var content = '';
+      menu.menuControlId = 'submenu-bar-'+Date.now();
+      for(var i = 0; i < menu.mobHideItems.length; i++) {
+        var item = menu.mobHideItems[i].cloneNode(true),
+          svg = item.getElementsByTagName('svg')[0],
+          label = item.getElementsByClassName('menu-bar__label')[0];
+  
+        svg.setAttribute('class', 'icon menu__icon');
+        content = content + '<li role="menuitem"><span class="menu__content js-menu__content">'+svg.outerHTML+'<span>'+label.innerHTML+'</span></span></li>';
+      }
+  
+      Util.setAttributes(menu.moreItemsTrigger[0], {'role': 'button', 'aria-expanded': 'false', 'aria-controls': menu.menuControlId, 'aria-haspopup': 'true'});
+  
+      var subMenu = document.createElement('menu'),
+        customClass = menu.element.getAttribute('data-menu-class');
+      Util.setAttributes(subMenu, {'id': menu.menuControlId, 'class': 'menu js-menu '+customClass});
+      subMenu.innerHTML = content;
+      document.body.appendChild(subMenu);
+  
+      menu.subMenu = subMenu;
+      menu.subItems = subMenu.getElementsByTagName('li');
+  
+      menu.menuInstance = new Menu(menu.subMenu); // this will handle the dropdown behaviour
+    };
+  
+    function checkMenuLayout(menu) { // switch from compressed to expanded layout and viceversa
+      var layout = getComputedStyle(menu.element, ':before').getPropertyValue('content').replace(/\'|"/g, '');
+      Util.toggleClass(menu.element, 'menu-bar--collapsed', layout == 'collapsed');
+    };
+  
+    function navigateItems(list, event, direction, prevIndex) { // keyboard navigation among menu items
+      event.preventDefault();
+      var index = (typeof prevIndex !== 'undefined') ? prevIndex : Util.getIndexInArray(list, event.target),
+        nextIndex = direction == 'next' ? index + 1 : index - 1;
+      if(nextIndex < 0) nextIndex = list.length - 1;
+      if(nextIndex > list.length - 1) nextIndex = 0;
+      // check if element is visible before moving focus
+      (list[nextIndex].offsetParent === null) ? navigateItems(list, event, direction, nextIndex) : Util.moveFocus(list[nextIndex]);
+    };
+  
+    function checkMenuClick(menu, target) { // close dropdown when clicking outside the menu element
+      if(menu.menuInstance && !menu.moreItemsTrigger[0].contains(target) && !menu.subMenu.contains(target)) menu.menuInstance.toggleMenu(false, false);
+    };
+  
+    // init MenuBars objects
+    var menuBars = document.getElementsByClassName('js-menu-bar');
+    if( menuBars.length > 0 ) {
+      var j = 0,
+        menuBarArray = [];
+      for( var i = 0; i < menuBars.length; i++) {
+        var beforeContent = getComputedStyle(menuBars[i], ':before').getPropertyValue('content');
+        if(beforeContent && beforeContent !='' && beforeContent !='none') {
+          (function(i){menuBarArray.push(new MenuBar(menuBars[i]));})(i);
+          j = j + 1;
+        }
+      }
+      
+      if(j > 0) {
+        var resizingId = false,
+          customEvent = new CustomEvent('update-menu-bar');
+        // update Menu Bar layout on resize  
+        window.addEventListener('resize', function(event){
+          clearTimeout(resizingId);
+          resizingId = setTimeout(doneResizing, 150);
+        });
+  
+        // close menu when clicking outside it
+        window.addEventListener('click', function(event){
+          menuBarArray.forEach(function(element){
+            checkMenuClick(element, event.target);
+          });
+        });
+  
+        function doneResizing() {
+          for( var i = 0; i < menuBars.length; i++) {
+            (function(i){menuBars[i].dispatchEvent(customEvent)})(i);
+          };
+        };
       }
     }
   }());

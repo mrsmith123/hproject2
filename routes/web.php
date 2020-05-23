@@ -22,6 +22,7 @@ Route::get('/venue', 'PagesController@venue');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 Route::get('/profile', 'PagesController@profile');
+Route::get('/blogadmin', 'PagesController@blogadmin');
 Route::get('/home', 'HomeController');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
