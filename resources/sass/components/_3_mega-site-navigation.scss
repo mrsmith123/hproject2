@@ -22,12 +22,12 @@ Usage: codyhouse.co/license
 .mega-nav {
     height: var(--mega-nav-height);
     z-index: var(--zindex-header);
-    background-color: var(--color-contrast-lower);
+    background-color: var(--color-contrast-higher);
 }
 
 // change mega-nav style if menu = expanded
 .mega-nav--expanded {
-    background-color: var(--color-contrast-lower);
+    background-color: var(--color-contrast-higher);
 }
 
 .mega-nav__container {
@@ -46,6 +46,7 @@ Usage: codyhouse.co/license
 .logo {
     font-family: 'Montserrat Subrayada', sans-serif;
     font-size: 30px;
+    color: alpha(var(--color-contrast-lower), var(--color-o, 1));
 }
 
 
@@ -63,7 +64,7 @@ Usage: codyhouse.co/license
     width: 40px;
     height: 40px;
     font-size: 24px; // icon size
-    color: var(--color-contrast-high); // icon color
+    color: var(--color-contrast-low); // icon color
     cursor: pointer;
     transition: 0.2s;
 
@@ -408,7 +409,7 @@ Usage: codyhouse.co/license
         height: 100%;
         font-size: var(--text-sm);
         font-weight: 400;
-        color: var(--color-contrast-high);
+        color: var(--color-contrast-lower);
         text-decoration: none;
         transition: 0.2s;
 
